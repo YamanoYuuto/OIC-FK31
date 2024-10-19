@@ -88,10 +88,11 @@ namespace OIC_FK31.Areas.Identity.Pages.Account
 
             messsage.To.Add(new MimeKit.MailboxAddress("user", $"{email}"));
 
-            messsage.Subject = "テスト";
+            messsage.Subject = "メールアドレスの確認";
 
             var textPart = new MimeKit.TextPart(MimeKit.Text.TextFormat.Plain);
-            textPart.Text = text;
+            textPart.Text = $@"まだ登録は完了していません。したのURLをクリックし登録を完了してください。見覚えのない場合は破棄してください
+                               {text}";
 
 
             messsage.Body = textPart;
