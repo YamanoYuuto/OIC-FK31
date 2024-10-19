@@ -5,6 +5,10 @@
 using System;
 using System.Text;
 using System.Threading.Tasks;
+using Google.Apis.Auth.OAuth2.Flows;
+using Google.Apis.Auth.OAuth2;
+using Google.Apis.Util.Store;
+using MailKit.Security;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
@@ -73,7 +77,64 @@ namespace OIC_FK31.Areas.Identity.Pages.Account
                     protocol: Request.Scheme);
             }
 
+            SendMailAsync(email, EmailConfirmationUrl);
             return Page();
+        }
+        static async void SendMailAsync(string email, string text)
+        {
+            var messsage = new MimeKit.MimeMessage();
+
+            messsage.From.Add(new MimeKit.MailboxAddress("yuuto", "yuutoyuuto0407@gmail.com"));
+
+            messsage.To.Add(new MimeKit.MailboxAddress("user", $"{email}"));
+
+            messsage.Subject = "テスト";
+
+            var textPart = new MimeKit.TextPart(MimeKit.Text.TextFormat.Plain);
+            textPart.Text = text;
+
+
+            messsage.Body = textPart;
+
+
+
+
+
+            const string GMailAccount = "yuutoyuuto0407@gmail.com";
+
+            var clientSecrets = new ClientSecrets
+            {
+                ClientId = "939600869933-samjdak9qaendeu0suu5fiv8pl3319j8.apps.googleusercontent.com",
+                ClientSecret = "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"
+            };
+
+            var codeFlow = new GoogleAuthorizationCodeFlow(new GoogleAuthorizationCodeFlow.Initializer
+            {
+                DataStore = new FileDataStore("CredentialCacheFolder", false),
+                Scopes = new[] { "https://mail.google.com/" },
+                ClientSecrets = clientSecrets,
+                LoginHint = GMailAccount
+            });
+
+            // Note: For a web app, you'll want to use AuthorizationCodeWebApp instead.
+            var codeReceiver = new LocalServerCodeReceiver();
+            var authCode = new AuthorizationCodeInstalledApp(codeFlow, codeReceiver);
+
+            var credential = await authCode.AuthorizeAsync(GMailAccount, CancellationToken.None);
+
+            if (credential.Token.IsStale)
+                await credential.RefreshTokenAsync(CancellationToken.None);
+
+            var oauth2 = new SaslMechanismOAuth2(credential.UserId, credential.Token.AccessToken);
+
+            using (var client = new MailKit.Net.Smtp.SmtpClient())
+            {
+                await client.ConnectAsync("smtp.gmail.com", 465, SecureSocketOptions.SslOnConnect);
+                await client.AuthenticateAsync(oauth2);
+                await client.SendAsync(messsage);
+                await client.DisconnectAsync(true);
+            }
+
         }
     }
 }
