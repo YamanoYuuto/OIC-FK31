@@ -1,0 +1,96 @@
+﻿@page
+@model FK_31.Pages.CheckModel
+@{
+}
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>施設予約システム - Thank you</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/Check.css" />
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid navbar-content">
+            <img src="~/images/logo.png" alt="施設予約システム" class="img-fluid" />
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Reserve">今すぐ予約</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/ReservationStatus">予約状況確認</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/CancelReservation">予約キャンセル</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            管理者の方
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="/FacilityRegistration">施設の登録と変更</a></li>
+                            <li><a class="dropdown-item" href="/UserManagement">使用者情報管理</a></li>
+                            <li><a class="dropdown-item" href="/ReportOutput">事務員用レポート出力</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a id="logoutButton" class="nav-link" asp-page="/Login">ログアウト</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>予約確認</h1>
+        <div class="content-box" id="confirmation-content">
+            <p>名前: </p>
+            <p>日時: </p>
+            <p>施設名: </p>
+            <p>時間: </p>
+        </div>
+        <div class="button-container">
+            <button class="back-button">← 戻る</button>
+            <button class="confirm-button" href="Thank.html">予約確定</button>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.getElementById("logoutButton").addEventListener("click", function(event) {
+          event.preventDefault(); // デフォルトのリンク動作を防ぐ
+          Swal.fire({
+            title: "ログアウトしますか？",
+            text: "",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "はい",
+            cancelButtonText: "いいえ",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              Swal.fire({
+                title: "ログアウトしました",
+                text: "",
+                icon: ""
+              }).then(() => {
+                window.location.href = "/Login";
+              });
+            }
+          });
+        });
+    </script>
+</body>
+</html>

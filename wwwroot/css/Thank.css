@@ -1,0 +1,99 @@
+.navbar {
+    background-color: #e6ffd6;
+    display: flex;
+    justify-content: flex-start; /* 左寄せ */
+    align-items: flex-start; /* 上寄せ */
+    padding: 10px; /* 必要に応じてパディングを調整 */
+}
+
+.img-fluid {
+    width: 30vh; /* 画像の幅を小さく設定 */
+    height: auto; /* アスペクト比を維持 */
+}
+
+.system-name {
+    display: block;
+    font-size: 18px; /* 必要に応じてフォントサイズを調整 */
+}
+
+.system-name-en {
+    display: block;
+    font-size: 24px; /* 必要に応じてフォントサイズを調整 */
+    font-weight: bold; /* 必要に応じてフォントの太さを調整 */
+    margin-top: 5px; /* 必要に応じて上部のマージンを調整 */
+}
+
+.container {
+    max-width: 400px;
+    margin: 50px auto;
+}
+
+.navbar .btn-outline-danger {
+    color: white;
+    border-color: white;
+}
+
+    .navbar .btn-outline-danger:hover {
+        background-color: #dc3545;
+        color: white;
+    }
+
+.navbar-collapse {
+    justify-content: center;
+}
+
+.container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+h1 {
+    color: #333;
+    font-size: 24px;
+    text-align: center;
+    border-bottom: 2px solid #0078D7;
+    display: block;
+    padding-bottom: 10px;
+    margin: 20px auto; /* センターに表示 */
+    text-align: center;
+}
+
+.text-center {
+    text-align: center;
+}
+
+p {
+    color: #555;
+    margin-bottom: 20px;
+}
+
+.content-box {
+    background-color: #e0e0e0;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    text-align: left;
+    white-space: pre-wrap; /* 改行を維持して表示 */
+    font-family: monospace;
+}
+
+.back-button {
+    padding: 10px 20px;
+    background-color: #f79450;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    display: block;
+    margin: 20px auto; /* センターに表示 */
+    text-align: center;
+}
+
+    .back-button:hover {
+        background-color: #e08843;
+    }
