@@ -100,7 +100,7 @@ namespace OIC_FK31.Areas.Identity.Pages.Account
 
 
 
-
+            //oauth認証
             const string GMailAccount = "yuutoyuuto0407@gmail.com";
 
             var clientSecrets = new ClientSecrets
@@ -117,7 +117,7 @@ namespace OIC_FK31.Areas.Identity.Pages.Account
                 LoginHint = GMailAccount
             });
 
-            // Note: For a web app, you'll want to use AuthorizationCodeWebApp instead.
+        
             var codeReceiver = new LocalServerCodeReceiver();
             var authCode = new AuthorizationCodeInstalledApp(codeFlow, codeReceiver);
 
@@ -130,6 +130,7 @@ namespace OIC_FK31.Areas.Identity.Pages.Account
 
             using (var client = new MailKit.Net.Smtp.SmtpClient())
             {
+                Program program = new Program();
                 await client.ConnectAsync("smtp.gmail.com", 465, SecureSocketOptions.SslOnConnect);
                 await client.AuthenticateAsync(oauth2);
                 await client.SendAsync(messsage);
