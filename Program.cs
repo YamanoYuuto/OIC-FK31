@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Protocol.Plugins;
 using OIC_FK31.Data;
+using System.Security.Principal;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,9 +34,9 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
 app.UseAuthorization();
-
 app.MapRazorPages();
+
+app.MapGet("/", () => Results.Redirect("/Identity/Account/Login"));
 
 app.Run();
