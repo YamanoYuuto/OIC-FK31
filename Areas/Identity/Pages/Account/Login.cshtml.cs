@@ -19,11 +19,14 @@ namespace OIC_FK31.Areas.Identity.Pages.Account
 {
     public class LoginModel : PageModel
     {
+        //_userManager関連を追加 23,27,29 + getに
+        private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
 
-        public LoginModel(SignInManager<IdentityUser> signInManager, ILogger<LoginModel> logger)
+        public LoginModel(SignInManager<IdentityUser> signInManager, ILogger<LoginModel> logger, UserManager<IdentityUser> userManager)
         {
+            _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
         }
@@ -84,8 +87,15 @@ namespace OIC_FK31.Areas.Identity.Pages.Account
             public bool RememberMe { get; set; }
         }
 
-        public async Task OnGetAsync(string returnUrl = null)
+        public async Task<IActionResult> OnGetAsync(string returnUrl = null)
         {
+            //<IActionResult>にして
+            var user = await _userManager.GetUserAsync(User);
+            if (user != null)
+            {
+                return RedirectToPage("/TopMenu");
+            }
+
             if (!string.IsNullOrEmpty(ErrorMessage))
             {
                 ModelState.AddModelError(string.Empty, ErrorMessage);
@@ -99,6 +109,7 @@ namespace OIC_FK31.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
             ReturnUrl = returnUrl;
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
