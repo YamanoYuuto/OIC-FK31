@@ -89,7 +89,7 @@ namespace OIC_FK31.Areas.Identity.Pages.Account
         {
             var messsage = new MimeKit.MimeMessage();
 
-            messsage.From.Add(new MimeKit.MailboxAddress("Zoom Booker", "yuutoyuuto0407@gmail.com"));
+            messsage.From.Add(new MimeKit.MailboxAddress("ZONE BOOKER", "yuutoyuuto0407@gmail.com"));
 
             messsage.To.Add(new MimeKit.MailboxAddress("user", $"{email}"));
 
