@@ -1,0 +1,181 @@
+﻿@page
+@model OIC_FK31.Pages.CalendarModel
+@{
+}
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>施設予約システム - Thank you</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/Check.css" />
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid navbar-content">
+            <img src="~/images/Logo.png" alt="施設予約システム" class="img-fluid" />
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Reserve">今すぐ予約</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/ReservationStatus">予約状況確認</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/CancelReservation">予約キャンセル</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            管理者の方
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="/FacilityRegistration">施設の登録と変更</a></li>
+                            <li><a class="dropdown-item" href="/UserManagement">使用者情報管理</a></li>
+                            <li><a class="dropdown-item" href="/ReportOutput">事務員用レポート出力</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a id="logoutButton" class="nav-link" href="Login.html">ログアウト</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <nav class="navbar navbar-expand-lg" style="background-color: rgb(190, 190, 190);">
+        <div class="container-fluid navbar-content">
+            <p><strong>施設名</strong></p>
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" id="weekButton">週</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="dayButton">日</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container mt-5"></div>
+    <h2 class="text-center">日時を選択してください</h2>
+    <div id="calendar" class="mx-auto" style="max-width: 80%;"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                headerToolbar: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                },
+                locale: 'ja', // 日本語表示に設定
+                contentHeight: 'auto', // 高さを自動調整
+                aspectRatio: 1.5, // アスペクト比を設定してレスポンシブ対応
+                slotDuration: '00:30:00',
+                allDaySlot: false, // 全日表示を無効にする
+                dateClick: function(info) {
+                    calendar.changeView('timeGridDay', info.dateStr); // 日をクリックしたらそのdayに飛ぶ
+                },
+                views: {
+                    timeGridDay: {
+                        slotLabelInterval: '00:30', // 30分ごとのラベルを表示
+                        slotMinTime: '00:00', // 表示開始時間を0時00分に設定
+                        slotMaxTime: '24:00' // 表示終了時間を24時00分に設定
+                    }
+                }
+            });
+            calendar.render();
+        });
+
+        var selectedTimes = [];
+
+        document.getElementById('calendar').addEventListener('click', function(event) {
+            if (event.target.classList.contains('fc-timegrid-slot')) {
+                var selectedTime = event.target.getAttribute('data-time');
+                if (selectedTimes.includes(selectedTime)) {
+                    selectedTimes = selectedTimes.filter(time => time !== selectedTime);
+                    event.target.classList.remove('selected');
+                    event.target.style.backgroundColor = ''; // 色を元に戻す
+                } else {
+                    selectedTimes.push(selectedTime);
+                    event.target.classList.add('selected');
+                    event.target.style.backgroundColor = ' #e6ffd6'; // 色を塗る
+                }
+            }
+        });
+
+        // 決定ボタンを日時を選択してくださいの上に配置
+        document.querySelector('h2').insertAdjacentHTML('beforebegin', '<div class="text-center mb-3"><button id="confirmButton" class="btn btn-primary btn-lg">決定</button></div>');
+
+        document.getElementById('confirmButton').addEventListener('click', function() {
+            if (selectedTimes.length > 0) {
+                Swal.fire({
+                    title: 'これらの時間を選択しますか？',
+                    text: selectedTimes.join(', '),
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'はい',
+                    cancelButtonText: 'いいえ'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        localStorage.setItem('selectedTimes', JSON.stringify(selectedTimes));
+                        window.location.href = "/Info";
+                    }
+                });
+            } else {
+                Swal.fire({
+                    title: '時間が選択されていません',
+                    text: '少なくとも1つの時間を選択してください。',
+                    icon: 'warning',
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: 'OK'
+                });
+            }
+        });
+    </script>
+
+    <!-- Bootstrap JS -->
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.getElementById("logoutButton").addEventListener("click", function(event) {
+          event.preventDefault(); // デフォルトのリンク動作を防ぐ
+          Swal.fire({
+            title: "ログアウトしますか？",
+            text: "",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "はい",
+            cancelButtonText: "いいえ",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              Swal.fire({
+                title: "ログアウトしました",
+                text: "",
+                icon: ""
+              }).then(() => {
+                  window.location.href = "/Login";
+              });
+            }
+          });
+        });
+    </script>
+</body>
+</html>
