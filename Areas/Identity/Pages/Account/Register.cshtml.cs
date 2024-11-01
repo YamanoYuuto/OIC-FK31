@@ -107,7 +107,8 @@ namespace OIC_FK31.Areas.Identity.Pages.Account
         public async Task OnGetAsync(string returnUrl = null)
         {
             //role追加
-            //await _roleManager.CreateAsync(new IdentityRole("User"));
+            await _roleManager.CreateAsync(new IdentityRole("User"));
+            await _roleManager.CreateAsync(new IdentityRole("Admin"));
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }

@@ -16,6 +16,9 @@ namespace FK_31.Pages
             _signInManager = signInManager;
             _logger = logger;
         }
+
+        public bool AdminFlg { get; set; } = false;
+
         public async Task<IActionResult> OnGetAsync()
         {
             //<IActionResult>‚É‚µ‚Ä
@@ -24,6 +27,11 @@ namespace FK_31.Pages
             {
                 return Redirect("/Identity/Account/Login");
             }
+            if (await _userManager.IsInRoleAsync(user, "Admin") == true) 
+            {
+                AdminFlg = true; 
+            }
+
             return Page();
         }
     }
