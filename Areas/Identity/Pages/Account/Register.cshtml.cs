@@ -106,9 +106,6 @@ namespace OIC_FK31.Areas.Identity.Pages.Account
 
         public async Task OnGetAsync(string returnUrl = null)
         {
-            //role追加
-            await _roleManager.CreateAsync(new IdentityRole("User"));
-            await _roleManager.CreateAsync(new IdentityRole("Admin"));
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
@@ -128,6 +125,9 @@ namespace OIC_FK31.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
+                    //role追加
+                    await _roleManager.CreateAsync(new IdentityRole("User"));
+                    await _roleManager.CreateAsync(new IdentityRole("Admin"));
                     //UserRoleに追加
                     result = await _userManager.AddToRoleAsync(user, "User");
                     //
