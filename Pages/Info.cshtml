@@ -59,13 +59,8 @@
         <form class="h-adr" action="confirm.html" method="POST">
             <span class="p-country-name" style="display:none;">Japan</span>
             <div class="mb-3">
-                <label class="form-label">予約日</label>
-                <p>2024年3月11日</p>
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">予約時間</label>
-                <p>11時10分</p>
+                <label class="form-label">選択された日時</label>
+                <ul id="reservationList">データを読み込んでいます...</ul>
             </div>
 
             <div class="mb-3">
@@ -138,6 +133,21 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        // ページロード時にlocalStorageからデータを取得して表示
+        document.addEventListener('DOMContentLoaded', function () {
+            const selectedTimes = JSON.parse(localStorage.getItem('selectedTimes') || "{}");
+            const reservationList = document.getElementById('reservationList');
+
+            if (Object.keys(selectedTimes).length > 0) {
+                reservationList.innerHTML = Object.entries(selectedTimes)
+                    .map(([date, times]) => `<li><b>${date}</b>: ${times.join(', ')}</li>`)
+                    .join('');
+            } else {
+                reservationList.innerHTML = '<li>選択された日時がありません</li>';
+            }
+        });
+    </script>
+    <script>
         document.getElementById("logoutButton").addEventListener("click", function (event) {
             event.preventDefault(); // デフォルトのリンク動作を防ぐ
             Swal.fire({
@@ -156,7 +166,7 @@
                         text: "",
                         icon: ""
                     }).then(() => {
-                        window.location.href = "/Login";
+                        window.location.href = "/Identity/Account/Logout";
                     });
                 }
             });
