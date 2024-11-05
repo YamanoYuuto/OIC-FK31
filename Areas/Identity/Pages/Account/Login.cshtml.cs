@@ -67,7 +67,7 @@ namespace OIC_FK31.Areas.Identity.Pages.Account
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
-            [Required]
+            [Required(ErrorMessage = "メールアドレスを入力してください。")]
             [EmailAddress]
             public string Email { get; set; }
 
@@ -75,7 +75,7 @@ namespace OIC_FK31.Areas.Identity.Pages.Account
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
-            [Required]
+            [Required(ErrorMessage = "パスワードを入力してください。")]
             [DataType(DataType.Password)]
             public string Password { get; set; }
 
@@ -83,7 +83,7 @@ namespace OIC_FK31.Areas.Identity.Pages.Account
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
-            [Display(Name = "Remember me?")]
+            [Display(Name = "ログイン状態を維持しますか?")]
             public bool RememberMe { get; set; }
         }
 
@@ -139,7 +139,7 @@ namespace OIC_FK31.Areas.Identity.Pages.Account
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    ModelState.AddModelError(string.Empty, "メールアドレスもしくはパスワードが間違っています。");
                     return Page();
                 }
             }
