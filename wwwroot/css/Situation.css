@@ -1,0 +1,71 @@
+.navbar {
+    background-color: #e6ffd6;
+    display: flex;
+    justify-content: flex-start; /* 左寄せ */
+    align-items: flex-start; /* 上寄せ */
+    padding: 10px; /* 必要に応じてパディングを調整 */
+}
+
+.img-fluid {
+    width: 30vh; /* 画像の幅を小さく設定 */
+    height: auto; /* アスペクト比を維持 */
+}
+
+.system-name {
+    display: block;
+    font-size: 18px; /* 必要に応じてフォントサイズを調整 */
+}
+
+.system-name-en {
+    display: block;
+    font-size: 24px; /* 必要に応じてフォントサイズを調整 */
+    font-weight: bold; /* 必要に応じてフォントの太さを調整 */
+    margin-top: 5px; /* 必要に応じて上部のマージンを調整 */
+}
+
+.container {
+    max-width: 400px;
+    margin: 50px auto;
+}
+
+.navbar .btn-outline-danger {
+    color: white;
+    border-color: white;
+}
+
+    .navbar .btn-outline-danger:hover {
+        background-color: #dc3545;
+        color: white;
+    }
+
+.navbar-collapse {
+    justify-content: center;
+}
+
+.back-button {
+    background-color: #000;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+    .back-button:hover {
+        background-color: #444;
+    }
+
+.reservation-card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.cancel-link {
+    color: red;
+    text-decoration: underline;
+}
