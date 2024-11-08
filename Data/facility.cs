@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace OIC_FK31.Data.Migrations
+namespace OIC_FK31.Data
 {
     public class facility
     {
