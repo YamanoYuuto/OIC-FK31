@@ -269,7 +269,11 @@ namespace OIC_FK31.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
+            modelBuilder.Entity<facility>();
+            modelBuilder.Entity<reservation>();
+
 #pragma warning restore 612, 618
+
         }
     }
 }
