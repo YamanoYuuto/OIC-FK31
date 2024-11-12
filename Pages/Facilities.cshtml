@@ -24,7 +24,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="/Reserve">今すぐ予約</a>
+                        <a class="nav-link" href="/Facilities">今すぐ予約</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/ReservationStatus">予約状況確認</a>
@@ -58,6 +58,26 @@
             font-size: 24px;
             font-weight: bold;
         }
+
+        /* 日時選択ボタンのスタイル */
+        a.date-selection-button {
+            text-decoration: none; /* アンダーバーを削除 */
+            color: black; /* 黒文字に変更 */
+            background-color: transparent; /* 背景色なし */
+            padding: 8px 16px; /* ボタン内の余白 */
+            border: 1px solid #ccc; /* ボタンの枠線 */
+            border-radius: 4px; /* 角丸のボタン */
+            display: inline-block; /* インラインブロックで表示 */
+            font-size: 16px; /* フォントサイズ */
+            font-weight: normal; /* フォントの太さ */
+        }
+
+            a.date-selection-button:hover {
+                color: #fff; /* ホバー時に文字色を白に */
+                background-color: #007bff; /* ホバー時に背景色を青に */
+                border-color: #007bff; /* ホバー時に枠線の色を青に */
+            }
+
 
         .search-bar {
             margin: 20px 0;
@@ -158,10 +178,13 @@
                         <dd class="col-sm-8 facility-bunsyo">大阪府大阪市天王寺区上本町 6-8-4</dd>
                     </dl>
 
-                    <!-- 中央に配置されたボタン -->
+                    <!-- 日時選択ボタン -->
                     <div class="d-flex justify-content-center mt-3">
-                        <a class="btn btn-primary" asp-page="/Calendar" style="background-color: #5bc0de; border-color: #46b8da;">日時を選択</a>
+                        <!-- ボタンの情報 -->
+                        <a href="/DateSelection" class="date-selection-button" data-url="/Calendar" data-facility-name="麻布台ヒルズ" style="background-color: #5bc0de; border-color: #46b8da">日時選択</a>
+
                     </div>
+
                 </div>
             </div>
 
@@ -184,10 +207,13 @@
                         <dd class="col-sm-8 facility-bunsyo">大阪府大阪市天王寺区上本町 6-8-4</dd>
                     </dl>
 
-                    <!-- 中央に配置されたボタン -->
+                    <!-- 日時選択ボタン -->
                     <div class="d-flex justify-content-center mt-3">
-                        <a class="btn btn-primary" asp-page="/Calendar" style="background-color: #5bc0de; border-color: #46b8da;">日時を選択</a>
+                        <!--ボタンの情報-->
+                        <a href="/DateSelection" class="date-selection-button" data-url="/Calendar" data-facility-name="麻布台ヒルズ" style="background-color: #5bc0de; border-color: #46b8da">日時選択</a>
+
                     </div>
+
                 </div>
             </div>
 
@@ -208,10 +234,14 @@
                         <dd class="col-sm-8 facility-bunsyo">大阪府大阪市天王寺区上本町 6-8-4</dd>
                     </dl>
 
-                    <!-- 中央に配置されたボタン -->
+                    <!-- 日時選択ボタン -->
                     <div class="d-flex justify-content-center mt-3">
-                        <a class="btn btn-primary" asp-page="/Calendar" style="background-color: #5bc0de; border-color: #46b8da;">日時を選択</a>
+
+                        <!--ボタンの情報-->
+                        <a href="/DateSelection" class="date-selection-button" data-url="/Calendar" data-facility-name="麻布台ヒルズ" style="background-color: #5bc0de; border-color: #46b8da">日時選択</a>
+
                     </div>
+
                 </div>
             </div>
         </div>
@@ -244,5 +274,61 @@
             });
         });
     </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // ページがロードされたときに検索条件を復元する
+            const facilityName = localStorage.getItem('facilityName');
+            const genre = localStorage.getItem('genre');
+            const location = localStorage.getItem('location');
+
+            if (facilityName) {
+                document.querySelector('input[placeholder="施設名"]').value = facilityName;
+            }
+            if (genre) {
+                document.querySelector('select.form-select:nth-of-type(1)').value = genre;
+            }
+            if (location) {
+                document.querySelector('select.form-select:nth-of-type(2)').value = location;
+            }
+
+            // 検索ボタンがクリックされたときに検索条件を保存する
+            document.querySelector('.btn.btn-primary').addEventListener('click', () => {
+                const facilityNameInput = document.querySelector('input[placeholder="施設名"]').value;
+                const genreSelect = document.querySelector('select.form-select:nth-of-type(1)').value;
+                const locationSelect = document.querySelector('select.form-select:nth-of-type(2)').value;
+
+                localStorage.setItem('facilityName', facilityNameInput);
+                localStorage.setItem('genre', genreSelect);
+                localStorage.setItem('location', locationSelect);
+            });
+        });
+
+
+        // 施設の名前をlocalStorageに保存する処理
+        document.querySelectorAll('.date-selection-button').forEach(button => {
+            button.addEventListener('click', function (event) {
+                event.preventDefault(); // リンクのデフォルト動作を防ぐ
+
+                // data-facility-name属性から施設の名前を取得
+                const facilityName = this.getAttribute('data-facility-name');
+
+                // localStorageに施設の名前を保存
+                localStorage.setItem('selectedFacilityName', facilityName);
+
+                // data-url属性からURLを取得し、遷移
+                const url = this.getAttribute('data-url');
+                if (url) {
+                    window.location.href = url;
+                } else {
+                    console.error('URLが見つかりません。');
+                }
+            });
+        });
+    </script>
+
+
+
 </body>
 </html>
+
