@@ -7,7 +7,7 @@
 }
 
 .img-fluid {
-    width: 30vh; /* 画像の幅を小さく設定 */
+    width: 30vh !important; /* 画像の幅を小さく設定 */
     height: auto; /* アスペクト比を維持 */
 }
 
