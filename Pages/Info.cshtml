@@ -154,7 +154,7 @@
 
             if (Object.keys(selectedTimes).length > 0) {
                 reservationList.innerHTML = Object.entries(selectedTimes)
-                    .map(([date, times]) => `<li><b>${date}</b>: ${times.join(', ')}</li>`)
+                    .map(([date, times]) => `<li><b>${date}</b>: ${times.join('～')}</li>`)
                     .join('');
             } else {
                 reservationList.innerHTML = '<li>選択された日時がありません</li>';
