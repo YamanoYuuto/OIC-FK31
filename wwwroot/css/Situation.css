@@ -7,7 +7,7 @@
 }
 
 .img-fluid {
-    width: 30vh !important; /* 画像の幅を小さく設定 */
+    width: 30vh; /* 画像の幅を小さく設定 */
     height: auto; /* アスペクト比を維持 */
 }
 
@@ -42,52 +42,30 @@
     justify-content: center;
 }
 
-/* コンテナ全体のスタイル */
-.container {
-    margin-top: 50px;
-}
-
-/* メニューリストのスタイル */
-.list-group-item {
-    font-size: 1.25rem;
-    padding: 15px 20px;
-    margin-bottom: 10px;
+.back-button {
+    background-color: #000;
+    color: #fff;
     border: none;
+    padding: 10px;
+    font-size: 16px;
     border-radius: 5px;
-    transition: background-color 0.2s ease;
+    margin-bottom: 20px;
 }
 
-    .list-group-item:hover {
-        background-color: #f8f9fa; /* ホバー時の背景色を淡いグレーに */
+    .back-button:hover {
+        background-color: #444;
     }
 
-.list-group-item-action {
-    color: #343a40;
-    text-decoration: none;
+.reservation-card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    max-width: 500px;
+    margin: 0 auto;
 }
 
-    /* 管理者権限専用メニューのスタイル */
-    .list-group-item-action:hover {
-        color: #495057;
-    }
-
-/* ボタン全体に幅を持たせる */
-.btn {
-    width: 100%;
-}
-
-/* レスポンシブデザイン: 小さな画面ではメニュー項目を中央に */
-@media (max-width: 576px) {
-    .container {
-        margin-top: 30px;
-    }
-
-    .list-group-item {
-        font-size: 1rem;
-        padding: 10px 15px;
-    }
-
-    .navbar .navbar-brand {
-        font-size: 1.25rem;
-    }
+.cancel-link {
+    color: red;
+    text-decoration: underline;
 }
