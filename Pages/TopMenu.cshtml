@@ -59,7 +59,7 @@
             </div>
             <div class="col">
                 <a href="/Page2">
-                    <img src="~/images/Group 7.png" class="img-fluid hov" alt="Image 2" style="width: 100%; height: auto;">
+                    <img src="~/images/yoyaku.png" class="img-fluid hov" alt="Image 2" style="width: 100%; height: auto;">
                 </a>
             </div>
             <div class="col">
@@ -68,8 +68,8 @@
                 </a>
             </div>
             <div class="col">
-                <a id="logoutButton">
-                    <img src="~/images/Group 3.png" class="img-fluid hov" alt="Image 4" style="width: 100%; height: auto;">
+                <a id="logoutButton2">
+                    <img src="~/images/Group 3.png" class="img-fluid hov"  alt="Image 4" style="width: 100%; height: auto;">
                 </a>
             </div>
         </div>
@@ -79,29 +79,54 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        document.getElementById('logoutButton').addEventListener("click", function (event) {
-          event.preventDefault(); // デフォルトのリンク動作を防ぐ
-          Swal.fire({
-            title: "ログアウトしますか？",
-            text: "",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "はい",
-            cancelButtonText: "いいえ",
-          }).then((result) => {
-            if (result.isConfirmed) {
+        <script>
+            document.getElementById('logoutButton').addEventListener("click", function (event) {
+              event.preventDefault(); // デフォルトのリンク動作を防ぐ
               Swal.fire({
-                title: "ログアウトしました",
+                title: "ログアウトしますか？",
                 text: "",
-                icon: ""
-              }).then(() => {
-                        window.location.href = "/Identity/Account/Logout";
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "はい",
+                cancelButtonText: "いいえ",
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  Swal.fire({
+                    title: "ログアウトしました",
+                    text: "",
+                    icon: ""
+                  }).then(() => {
+                            window.location.href = "/Identity/Account/Logout";
+                  });
+                }
               });
-            }
-          });
-        });
-    </script>
+            });
+
+            document.getElementById('logoutButton2').addEventListener("click", function (event) {
+              event.preventDefault(); // デフォルトのリンク動作を防ぐ
+              Swal.fire({
+                title: "ログアウトしますか？",
+                text: "",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "はい",
+                cancelButtonText: "いいえ",
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  Swal.fire({
+                    title: "ログアウトしました",
+                    text: "",
+                    icon: ""
+                  }).then(() => {
+                            window.location.href = "/Identity/Account/Logout";
+                  });
+                }
+              });
+            });
+        </script>
 </body>
 </html>
