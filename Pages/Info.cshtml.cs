@@ -1,14 +1,18 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Nodes;
 
 namespace OIC_FK31.Pages
 {
     public class InfoModel : PageModel
     {
-        public void OnGet()
+        public string _DataTime { get; set; }
+        public IActionResult OnGet([FromQuery] string DataTime)
         {
-
+            _DataTime = DataTime;
+            return Page();
         }
 
         [BindProperty]

@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using NuGet.Protocol.Plugins;
 using OIC_FK31.Data;
 using System.Security.Principal;
+using OIC_FK31;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,10 +16,14 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+builder.Services.AddSession(options => {
+    options.IdleTimeout = TimeSpan.FromMinutes(30);
+});
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddRoles<IdentityRole>()
-    .AddEntityFrameworkStores<ApplicationDbContext>();
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddErrorDescriber<IdentityErrorDescriberJP>();
 builder.Services.AddRazorPages();
 
 var app = builder.Build();
@@ -41,7 +46,7 @@ app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthorization();
 app.MapRazorPages();
-
+app.UseSession();
 app.MapGet("/", () => Results.Redirect("/Identity/Account/Login"));
 
 app.Run();
