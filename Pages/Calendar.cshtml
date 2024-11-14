@@ -212,7 +212,56 @@
             }
         });
     </script>
+        <script>
+                document.addEventListener('DOMContentLoaded', () => {
+                    // ページがロードされたときに検索条件を復元する
+                    const facilityName = localStorage.getItem('facilityName');
+            const genre = localStorage.getItem('genre');
+            const location = localStorage.getItem('location');
+
+            if (facilityName) {
+                document.querySelector('input[placeholder="施設名"]').value = facilityName;
+                    }
+            if (genre) {
+                document.querySelector('select.form-select:nth-of-type(1)').value = genre;
+                    }
+            if (location) {
+                document.querySelector('select.form-select:nth-of-type(2)').value = location;
+                    }
+
+                    // 検索ボタンがクリックされたときに検索条件を保存する
+                    document.querySelector('.btn.btn-primary').addEventListener('click', () => {
+                        const facilityNameInput = document.querySelector('input[placeholder="施設名"]').value;
+            const genreSelect = document.querySelector('select.form-select:nth-of-type(1)').value;
+            const locationSelect = document.querySelector('select.form-select:nth-of-type(2)').value;
+
+            localStorage.setItem('facilityName', facilityNameInput);
+            localStorage.setItem('genre', genreSelect);
+            localStorage.setItem('location', locationSelect);
+                    });
+                });
 
 
+                // 施設の名前をlocalStorageに保存する処理
+                document.querySelectorAll('.date-selection-button').forEach(button => {
+                button.addEventListener('click', function (event) {
+                    event.preventDefault(); // リンクのデフォルト動作を防ぐ
+
+                    // data-facility-name属性から施設の名前を取得
+                    const facilityName = this.getAttribute('data-facility-name');
+
+                    // localStorageに施設の名前を保存
+                    localStorage.setItem('selectedFacilityName', facilityName);
+
+                    // data-url属性からURLを取得し、遷移
+                    const url = this.getAttribute('data-url');
+                    if (url) {
+                        window.location.href = url;
+                    } else {
+                        console.error('URLが見つかりません。');
+                    }
+                });
+                });
+    </script>
 </body>
 </html>
