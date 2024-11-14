@@ -3,6 +3,8 @@
 @{
 }
 
+
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -24,7 +26,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="/Reserve">今すぐ予約</a>
+                        <a class="nav-link" href="/Facilities">今すぐ予約</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/ReservationStatus">予約状況確認</a>
@@ -52,7 +54,12 @@
 
     <nav class="navbar navbar-expand-lg" style="background-color: rgb(190, 190, 190);">
         <div class="container-fluid navbar-content">
-            <p><strong>施設名</strong></p>
+            <p>
+                <strong>
+                    施設名     <!-- 施設名を表示する要素 -->
+                    <p1 id="facility-name-display">施設名がここに表示されます</p1>
+                </strong>
+            </p>
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
                     <a class="nav-link" id="weekButton">週</a>
@@ -65,6 +72,8 @@
     </nav>
 
     <div class="container mt-5"></div>
+
+
     <h2 class="text-center">日時を選択してください</h2>
     <div id="calendar" class="mx-auto" style="max-width: 80%;"></div>
 
@@ -168,29 +177,42 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        document.getElementById("logoutButton").addEventListener("click", function(event) {
-          event.preventDefault(); // デフォルトのリンク動作を防ぐ
-          Swal.fire({
-            title: "ログアウトしますか？",
-            text: "",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "はい",
-            cancelButtonText: "いいえ",
-          }).then((result) => {
-            if (result.isConfirmed) {
-              Swal.fire({
-                title: "ログアウトしました",
+        document.getElementById("logoutButton").addEventListener("click", function (event) {
+            event.preventDefault(); // デフォルトのリンク動作を防ぐ
+            Swal.fire({
+                title: "ログアウトしますか？",
                 text: "",
-                icon: ""
-              }).then(() => {
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "はい",
+                cancelButtonText: "いいえ",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire({
+                        title: "ログアウトしました",
+                        text: "",
+                        icon: ""
+                    }).then(() => {
                         window.location.href = "/Identity/Account/Logout";
-              });
-            }
-          });
+                    });
+                }
+            });
         });
     </script>
+
+    <script>
+        // localStorageから施設名を取得して表示する処理
+        window.addEventListener('DOMContentLoaded', () => {
+            const facilityName = localStorage.getItem('selectedFacilityName');
+
+            if (facilityName) {
+                document.getElementById('facility-name-display').textContent = facilityName;
+            }
+        });
+    </script>
+
+
 </body>
 </html>
