@@ -161,8 +161,12 @@
                     }).then((result) => {
                         if (result.isConfirmed) {
                             // 選択した時間を保存
-                            localStorage.setItem('selectedTimes', JSON.stringify(selectedTimes));
-                            window.location.href = "/Info";
+                            // sessionStorage.setItem('selectedTimes', JSON.stringify(selectedTimes));
+                            // 選択した時間をURLパラメーターに追加
+                            const url = new URL(window.location.href);
+                            url.pathname = '/Info';
+                            url.searchParams.set('DataTime', String(JSON.stringify(selectedTimes)));
+                            window.location.href = url;
                         }
                     });
                 } else {
