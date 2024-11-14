@@ -18,7 +18,7 @@ namespace OIC_FK31.Data
         public DbSet<facility> Facility {  get; set; }   
         public DbSet<reservation> Reservation { get; set; }
         public DbSet<userDetail> UserDetail { get; set; }
-        public DbSet<time> Times { get; set; }
+        public DbSet<time> Time { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
