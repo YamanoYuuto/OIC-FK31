@@ -8,10 +8,13 @@ namespace OIC_FK31.Pages
 {
     public class InfoModel : PageModel
     {
-        public string _DataTime { get; set; }
+        public string _sDataTime {  get; set; }
+        public string _eDataTime { get; set; }
         public IActionResult OnGet([FromQuery] string DataTime)
         {
-            _DataTime = DataTime;
+            string[] word = DataTime.Split('"','Å`');
+            _sDataTime = word[1] + word[3];
+            _eDataTime = word[1] + word[4];
             return Page();
         }
 
