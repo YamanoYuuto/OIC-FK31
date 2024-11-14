@@ -158,7 +158,7 @@
             }
         });
         </script>
-    <script>
+    @* <script>
         // ページロード時にlocalStorageからデータを取得して表示
         document.addEventListener('DOMContentLoaded', function () {
             const selectedTimes = JSON.parse(localStorage.getItem('selectedTimes') || "{}");
@@ -172,7 +172,7 @@
                 reservationList.innerHTML = '選択された日時がありません';
             }
         });
-    </script> *@
+    </script>  *@
     <script>
         document.getElementById("logoutButton").addEventListener("click", function (event) {
             event.preventDefault(); // デフォルトのリンク動作を防ぐ
