@@ -45,6 +45,8 @@ namespace FK_31.Pages
 
             [DataType(DataType.DateTime)]
             public DateTime endtime { get; set; }
+
+
         }
 
         public async Task<IActionResult> OnGetAsync()
@@ -58,28 +60,45 @@ namespace FK_31.Pages
         }
 
         public async Task<IActionResult> OnPostAsync()
-        {
+        {      
             var context = new ApplicationDbContext();
-            context.Time.Add(
-                new time
+
+            var Time = new time
+            {
+                FacilityID = Input.facilityid,
+                StartTime = Input.starttime,
+                EndTime = Input.endtime
+            };
+
+            context.Time.Add(Time);
+            context.SaveChanges();
+            
+                var UserDatail = new userDetail
                 {
-                    StartTime = Input.starttime,
-                    EndTime = Input.endtime,
-                });
-           
-            context.UserDetail.Add(
-                new userDetail
-                {
-                    LastName=Input.last_name,
-                    FirstName=Input.first_name,
-                    Email=Input.email,
-                    Phone=Input.phone,
-                    PostalCode=Input.postal_code,
-                    Prefecture=Input.prefecture,
-                    City=Input.city,
-                    Address=Input.address,
-                    Building=Input.building
-                });
+                    UserID = _userManager.GetUserAsync(User).Id,
+                    LastName = Input.last_name,
+                    FirstName = Input.first_name,
+                    Email = Input.email,
+                    Phone = Input.phone,
+                    PostalCode = Input.postal_code,
+                    Prefecture = Input.prefecture,
+                    City = Input.city,
+                    Address = Input.address,
+                    Building = Input.building
+                };
+
+            context.UserDetail.Add(UserDatail);
+            context.SaveChanges();
+
+            var Reservation = new reservation
+            {
+                UserDetailID = UserDatail.UserDetailID,
+                TimeID = Time.TimeID,
+                BookingDate=DateTime.Now
+            };
+            context.Reservation.Add(Reservation);
+            context.SaveChanges();
+
             return Redirect("/Thank");
         }
     }
