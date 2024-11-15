@@ -37,7 +37,16 @@ namespace FK_31.Pages
             public string address { get; set; }
 
             public string building { get; set; }
+
+            public int facilityid { get; set; }
+
+            [DataType(DataType.DateTime)]
+            public DateTime starttime { get; set; }
+
+            [DataType(DataType.DateTime)]
+            public DateTime endtime { get; set; }
         }
+
         public async Task<IActionResult> OnGetAsync()
         {
             var user = await _userManager.GetUserAsync(User);
@@ -51,10 +60,25 @@ namespace FK_31.Pages
         public async Task<IActionResult> OnPostAsync()
         {
             var context = new ApplicationDbContext();
+            context.Time.Add(
+                new time
+                {
+                    StartTime = Input.starttime,
+                    EndTime = Input.endtime,
+                });
+           
             context.UserDetail.Add(
                 new userDetail
                 {
-
+                    LastName=Input.last_name,
+                    FirstName=Input.first_name,
+                    Email=Input.email,
+                    Phone=Input.phone,
+                    PostalCode=Input.postal_code,
+                    Prefecture=Input.prefecture,
+                    City=Input.city,
+                    Address=Input.address,
+                    Building=Input.building
                 });
             return Redirect("/Thank");
         }
