@@ -61,10 +61,9 @@ namespace OIC_FK31.Pages
 
             public string building { get; set; }
         }
-
-        //public async Task<IActionResult> OnPostAsync()
-        //{
-
-        //}
+        public async Task<IActionResult> OnPostAsync()
+        {
+            return Redirect("/Check");
+        }
     }
 }

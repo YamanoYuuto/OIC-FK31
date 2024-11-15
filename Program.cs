@@ -16,8 +16,11 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options => {
+    options.Cookie.Name = "reserveData";
     options.IdleTimeout = TimeSpan.FromMinutes(30);
+    options.Cookie.IsEssential = true;
 });
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
@@ -45,8 +48,8 @@ app.UseStaticFiles();
 
 app.UseRouting();
 app.UseAuthorization();
-app.MapRazorPages();
 app.UseSession();
+app.MapRazorPages();
 app.MapGet("/", () => Results.Redirect("/Identity/Account/Login"));
 
 app.Run();
