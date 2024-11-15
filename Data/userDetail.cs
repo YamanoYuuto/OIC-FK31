@@ -15,8 +15,7 @@ namespace OIC_FK31.Data
         public string PostalCode { get; set; }
         public string Prefecture { get; set; }
         public string City { get; set; }
-        public string StreetAddress { get; set; }
-        public string ExtendedAddress { get; set; }
+        public string Address { get; set; }
         public string Building { get; set; }
     }
 }
