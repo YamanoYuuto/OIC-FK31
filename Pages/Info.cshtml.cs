@@ -8,10 +8,12 @@ namespace OIC_FK31.Pages
 {
     public class InfoModel : PageModel
     {
+        public int facilityid { get; set; }
         public string _sDataTime {  get; set; }
         public string _eDataTime { get; set; }
-        public IActionResult OnGet([FromQuery] string DataTime)
+        public IActionResult OnGet([FromQuery] string id,string DataTime)
         {
+            facilityid = int.Parse(id);
             string[] word = DataTime.Split('"','～');
             _sDataTime = word[1] + word[3];
             _eDataTime = word[1] + word[4];
@@ -57,8 +59,12 @@ namespace OIC_FK31.Pages
             [Required(ErrorMessage = "丁目・番地を入力してください。")]
             public string address { get; set; }
 
-            [Required(ErrorMessage = "建物名・部屋番号を入力してください。")]
             public string building { get; set; }
         }
+
+        //public async Task<IActionResult> OnPostAsync()
+        //{
+
+        //}
     }
 }

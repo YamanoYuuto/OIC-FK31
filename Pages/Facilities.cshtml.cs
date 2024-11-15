@@ -19,6 +19,7 @@ namespace OIC_FK31.Pages
                 context.Facility.AddRange(
                     new facility
                     {
+                        FacilityphotoPath = "sisukai.jpg",
                         FacilityName = "阪南市総合体育館",
                         OpeningTime = DateTime.Parse("08:00"),
                         ClosingTime = DateTime.Parse("19:00"),
@@ -28,10 +29,21 @@ namespace OIC_FK31.Pages
                     },
                     new facility
                     {
+                        FacilityphotoPath = "sisukai.jpg",
                         FacilityName = "大阪情報コンピュータ専門学校",
                         OpeningTime = DateTime.Parse("08:00"),
                         ClosingTime = DateTime.Parse("20:00"),
-                        FacilityAddress = "大阪府上本町",
+                        FacilityAddress = "大阪府上本町3丁目2-1",
+                        FacilityPhone = "123-1234-1234",
+                        FacilityPostCode = "135-2468",
+                    },
+                    new facility
+                    {
+                        FacilityphotoPath = "sisukai.jpg",
+                        FacilityName = "大阪情報コンピュータ専門学校",
+                        OpeningTime = DateTime.Parse("07:00"),
+                        ClosingTime = DateTime.Parse("21:00"),
+                        FacilityAddress = "大阪府三崎町高田990-2",
                         FacilityPhone = "123-1234-1234",
                         FacilityPostCode = "135-2468",
                     });

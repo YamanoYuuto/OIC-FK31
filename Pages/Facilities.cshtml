@@ -164,7 +164,7 @@
         @foreach(var item in Model.Facilities)
         {
                 <div class="card">
-                    <img src="/images/sisukai.jpg" alt="施設画像">
+                    <img src="/images/@item.FacilityphotoPath" alt="施設画像">
                     <div class="card-body">
                         <h5 class="card-title">@item.FacilityName</h5>
 
@@ -183,7 +183,7 @@
                         <!-- 日時選択ボタン -->
                         <div class="d-flex justify-content-center mt-3">
                             <!-- ボタンの情報 -->
-                            <a asp-page="./Calendar" asp-route-id="@item.FacilityID" class="date-selection-button"  data-facility-name="麻布台ヒルズ" style="background-color: #5bc0de; border-color: #46b8da">日時選択</a>
+                            <a asp-page="/Calendar" asp-route-id="@item.FacilityID" class="date-selection-button" data-url="/Calendar" data-path="@item.FacilityID" data-facility-name="@item.FacilityName" style="background-color: #5bc0de; border-color: #46b8da">日時選択</a>
 
                         </div>
 
@@ -198,7 +198,7 @@
 
             <!-- 他のカードを追加 -->
 
-            <div class="card">
+            @* <div class="card">
                 <img src="/images/sisukai.jpg" alt="施設画像">
                 <div class="card-body">
                     <h5 class="card-title">大阪情報コンピュータ専門学校</h5>
@@ -223,36 +223,9 @@
                     </div>
 
                 </div>
-            </div>
+            </div> *@
 
-            <div class="card">
-                <img src="~/images/sisukai.jpg" alt="施設画像">
-                <div class="card-body">
-                    <h5 class="card-title">大阪情報コンピュータ専門学校</h5>
-
-                    <!-- 定義リストを使用して情報をグループ化 -->
-                    <dl class="row">
-                        <dt class="col-sm-4 facility-label">利用時間</dt>
-                        <dd class="col-sm-8 facility-bunsyo">9:00〜18:00</dd>
-
-                        <dt class="col-sm-4 facility-label">休業日</dt>
-                        <dd class="col-sm-8 facility-bunsyo">12月31日から1月5日まで</dd>
-
-                        <dt class="col-sm-4 facility-label">住所</dt>
-                        <dd class="col-sm-8 facility-bunsyo">大阪府大阪市天王寺区上本町 6-8-4</dd>
-                    </dl>
-
-                    <!-- 日時選択ボタン -->
-                    <div class="d-flex justify-content-center mt-3">
-
-                        <!--ボタンの情報-->
-                        <a href="/DateSelection" class="date-selection-button" data-url="/Calendar" data-facility-name="麻布台ヒルズ" style="background-color: #5bc0de; border-color: #46b8da">日時選択</a>
-
-                    </div>
-
-                </div>
-            </div>
-        </div>
+            
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
@@ -326,7 +299,10 @@
                 // data-url属性からURLを取得し、遷移
                 const url = this.getAttribute('data-url');
                 if (url) {
-                    window.location.href = url;
+                        const urla = new URL(window.location.href);
+                        urla.pathname = url;
+                        urla.searchParams.set('id', this.getAttribute('data-path'))
+                        window.location.href = urla;
                 } else {
                     console.error('URLが見つかりません。');
                 }

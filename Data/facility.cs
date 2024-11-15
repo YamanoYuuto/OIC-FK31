@@ -13,5 +13,6 @@ namespace OIC_FK31.Data
         [DataType(DataType.DateTime)]
         public DateTime ClosingTime { get; set; }
         public string FacilityPostCode { get; set; }
+        public string FacilityphotoPath { get; set; }
     }
 }
