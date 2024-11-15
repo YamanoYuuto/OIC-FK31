@@ -59,6 +59,10 @@
         <form class="h-adr" action="confirm.html" method="POST">
             <span class="p-country-name" style="display:none;">Japan</span>
             <div class="mb-3">
+                <label class="form-labe">施設名</label>
+                <ul id="facility-name-display">施設名がここに表示されます</ul>            
+            </div>
+            <div class="mb-3">
                 <label class="form-label">選択された日時</label>
                 <ul id="reservationList">データを読み込んでいます...</ul>
             </div>
@@ -133,6 +137,16 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        // localStorageから施設名を取得して表示する処理
+        window.addEventListener('DOMContentLoaded', () => {
+            const facilityName = localStorage.getItem('selectedFacilityName');
+
+            if (facilityName) {
+                document.getElementById('facility-name-display').textContent = facilityName;
+            }
+        });
+        </script>
+    <script>
         // ページロード時にlocalStorageからデータを取得して表示
         document.addEventListener('DOMContentLoaded', function () {
             const selectedTimes = JSON.parse(localStorage.getItem('selectedTimes') || "{}");
@@ -140,10 +154,10 @@
 
             if (Object.keys(selectedTimes).length > 0) {
                 reservationList.innerHTML = Object.entries(selectedTimes)
-                    .map(([date, times]) => `<li><b>${date}</b>: ${times.join('～')}</li>`)
+                    .map(([date, times]) => `${date}</b>: ${times.join('～')}`)
                     .join('');
             } else {
-                reservationList.innerHTML = '<li>選択された日時がありません</li>';
+                reservationList.innerHTML = '選択された日時がありません';
             }
         });
     </script>

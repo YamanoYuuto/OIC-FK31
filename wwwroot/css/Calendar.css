@@ -40,3 +40,41 @@
 .fc-timegrid-slot {
     background-color: white;
 }
+
+#calendar {
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+    .fc-toolbar {
+        flex-wrap: wrap;
+    }
+
+        .fc-toolbar .fc-left,
+        .fc-toolbar .fc-center,
+        .fc-toolbar .fc-right {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+
+        .fc-toolbar .fc-left {
+            order: 1;
+        }
+
+        .fc-toolbar .fc-center {
+            order: 2;
+        }
+
+        .fc-toolbar .fc-right {
+            order: 3;
+        }
+}
+
+@media (max-width: 480px) {
+    .fc-toolbar .fc-left,
+    .fc-toolbar .fc-right {
+        display: none;
+    }
+}

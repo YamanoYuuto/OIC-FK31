@@ -9,9 +9,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>施設予約システム - トップメニュー</title>
+    <link rel="stylesheet" href="~/css/TopMenu.css" />
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="~/css/TopMenu.css" />
 </head>
 <body>
     <nav class="navbar navbar-expand-lg">
@@ -42,7 +42,7 @@
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a id="logoutButton" class="nav-link" asp-page="">ログアウト</a>
+                        <a id="logoutButton" class="nav-link" >ログアウト</a>
                     </li>
                 </ul>
             </div>
@@ -59,7 +59,7 @@
             </div>
             <div class="col">
                 <a href="/Page2">
-                    <img src="~/images/Group 7.png" class="img-fluid hov" alt="Image 2" style="width: 100%; height: auto;">
+                    <img src="~/images/yoyaku.png" class="img-fluid hov" alt="Image 2" style="width: 100%; height: auto;">
                 </a>
             </div>
             <div class="col">
@@ -68,8 +68,8 @@
                 </a>
             </div>
             <div class="col">
-                <a id="logoutButton">
-                    <img src="~/images/Group 3.png" class="img-fluid hov" alt="Image 4" style="width: 100%; height: auto;">
+                <a id="logoutButton2" asp-page="">
+                    <img src="~/images/Group 3.png" class="img-fluid hov"  alt="Image 4" style="width: 100%; height: auto;">
                 </a>
             </div>
         </div>
@@ -80,28 +80,53 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         document.getElementById('logoutButton').addEventListener("click", function (event) {
-          event.preventDefault(); // デフォルトのリンク動作を防ぐ
-          Swal.fire({
-            title: "ログアウトしますか？",
-            text: "",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "はい",
-            cancelButtonText: "いいえ",
-          }).then((result) => {
-            if (result.isConfirmed) {
+              event.preventDefault(); // デフォルトのリンク動作を防ぐ
               Swal.fire({
+                title: "ログアウトしますか？",
+                text: "",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "はい",
+                cancelButtonText: "いいえ",
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  Swal.fire({
+                    title: "ログアウトしました",
+                    text: "",
+                    icon: ""
+                  }).then(() => {
+                            window.location.href = "/Identity/Account/Logout";
+                  });
+                }
+              });
+            });
+        </script>
+        <script>
+        document.getElementById('logoutButton2').addEventListener("click", function (event) {
+            event.preventDefault(); // デフォルトのリンク動作を防ぐ
+        Swal.fire({
+            title: "ログアウトしますか？",
+        text: "",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "はい",
+        cancelButtonText: "いいえ",
+                  }).then((result) => {
+                    if (result.isConfirmed) {
+            Swal.fire({
                 title: "ログアウトしました",
                 text: "",
                 icon: ""
-              }).then(() => {
-                        window.location.href = "/Identity/Account/Logout";
-              });
-            }
-          });
-        });
-    </script>
+            }).then(() => {
+                window.location.href = "/Identity/Account/Logout";
+            });
+                    }
+                  });
+                });
+        </script>
 </body>
 </html>
