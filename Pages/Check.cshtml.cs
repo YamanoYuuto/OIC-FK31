@@ -56,28 +56,28 @@ namespace FK_31.Pages
             }
             if (Date != null)
             {
-                string[] date = Date.Split('!');
-                last_name = date[0];
-                first_name = date[1];
-                //email = date[2];
-                //phone = date[3];
-                //postal_code = date[4];
-                //prefecture = date[5];
-                //city = date[6];
-                //address = date[7];
-                //building = date[8];
-                facilityid = int.Parse(date[9]);
-                starttime = DateTime.Parse(date[10]);
-                endtime = DateTime.Parse(date[11]);
-
                 try
                 {
+                    string[] date = Date.Split('!');
+                    last_name = date[0];
+                    first_name = date[1];
+                    //email = date[2];
+                    //phone = date[3];
+                    //postal_code = date[4];
+                    //prefecture = date[5];
+                    //city = date[6];
+                    //address = date[7];
+                    //building = date[8];
+                    facilityid = int.Parse(date[9]);
+                    starttime = DateTime.Parse(date[10]);
+                    endtime = DateTime.Parse(date[11]);
+
                     ApplicationDbContext context = new ApplicationDbContext();
                     facilityname = context.Facility.Find(int.Parse(date[9])).FacilityName;
                 }
                 catch (Exception ex)
                 {
-
+                    return NotFound();
                 }
 
             }
@@ -105,7 +105,7 @@ namespace FK_31.Pages
             }
             else
             {
-                return Redirect("/TopMenu");
+                return NotFound();
             }
 
             var context = new ApplicationDbContext();

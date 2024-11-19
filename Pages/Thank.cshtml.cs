@@ -25,13 +25,27 @@ namespace FK_31.Pages
             try
             {
                 var reserve = await context.Reservation.FindAsync(id);
+                if (reserve == null)
+                    return NotFound();
+
                 var userdetail = await context.UserDetail.FindAsync(reserve.UserDetailID);
+                if (userdetail == null) 
+                    return NotFound();
+
                 last_name = userdetail.LastName;
                 first_name = userdetail.FirstName;
+
                 var time = await context.Time.FindAsync(reserve.UserDetailID);
+                if (time == null)
+                    return NotFound();
+
                 starttime = time.StartTime;
                 endtime = time.EndTime;
+
                 var facility = await context.Facility.FindAsync(time.FacilityID);
+                if (facility == null)
+                    return NotFound();
+
                 facilityname = facility.FacilityName;
 
                 SendMailAsync(userdetail.Email, $@"–¼‘O: {last_name} {first_name}
