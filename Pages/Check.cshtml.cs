@@ -119,8 +119,8 @@ namespace FK_31.Pages
                 EndTime = endtime
             };
 
-            context.Time.Add(Time);
-            context.SaveChanges();
+            await context.Time.AddAsync(Time);
+            await context.SaveChangesAsync();
             var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var UserDatail = new userDetail
             {
@@ -136,8 +136,8 @@ namespace FK_31.Pages
                 Building = building
             };
 
-            context.UserDetail.Add(UserDatail);
-            context.SaveChanges();
+            await context.UserDetail.AddAsync(UserDatail);
+            await context.SaveChangesAsync();
 
             var Reservation = new reservation
             {
@@ -147,8 +147,8 @@ namespace FK_31.Pages
                 Application = "‚È‚µ",
                 Number = 0
             };
-            context.Reservation.Add(Reservation);
-            context.SaveChanges();
+            await context.Reservation.AddAsync(Reservation);
+            await context.SaveChangesAsync();
 
             return RedirectToPage("/Thank", new {id = Reservation.ReservationID});
         }
