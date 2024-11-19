@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Identity;
 using OIC_FK31.Data;
 using System;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Security.Claims;
+using Org.BouncyCastle.Bcpg;
 
 namespace FK_31.Pages
 {
@@ -119,10 +121,10 @@ namespace FK_31.Pages
 
             context.Time.Add(Time);
             context.SaveChanges();
-
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var UserDatail = new userDetail
             {
-                UserID = _userManager.GetUserAsync(User).Id,
+                UserID = userid,
                 LastName = last_name,
                 FirstName = first_name,
                 Email = email,

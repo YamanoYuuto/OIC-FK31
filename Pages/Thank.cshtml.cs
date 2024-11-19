@@ -35,7 +35,7 @@ namespace FK_31.Pages
                 last_name = userdetail.LastName;
                 first_name = userdetail.FirstName;
 
-                var time = await context.Time.FindAsync(reserve.UserDetailID);
+                var time = await context.Time.FindAsync(reserve.TimeID);
                 if (time == null)
                     return NotFound();
 
