@@ -68,7 +68,7 @@ namespace OIC_FK31.Pages
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync([FromQuery] string id, string DataTime)
+        public IActionResult OnPostAsync([FromQuery] string id, string DataTime)
         {
             string[] word = DataTime.Split('"', 'Å`');
             sDataTime = word[1] + word[3];
