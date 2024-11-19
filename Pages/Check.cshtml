@@ -1,8 +1,7 @@
-﻿@page
+﻿@page "/Check/{Date}"
 @model FK_31.Pages.CheckModel
 @{
 }
-
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -50,17 +49,19 @@
     </nav>
 
     <div class="container">
-        <h1>予約確認</h1>
-        <div class="content-box" id="confirmation-content">
-            <p>名前: @Model.Input.last_name</p>
-            <p>日時: </p>
-            <p>施設名: </p>
-            <p>時間: </p>
-        </div>
-        <div class="button-container">
-            <button class="back-button">← 戻る</button>
-            <button class="confirm-button" href="Thank.html">予約確定</button>
-        </div>
+        <form method="POST">
+            <h1>予約確認</h1>
+            <div class="content-box" id="confirmation-content">
+                <p>名前: @Model.last_name @Model.first_name</p>
+                <p>日時: @Model.starttime.ToString("M")</p>
+                <p>施設名: @Model.facilityname</p>
+                <p>時間: @Model.starttime.ToString("t") ～ @Model.endtime.ToString("t")</p>
+            </div>
+            <div class="button-container">
+                <button class="back-button">← 戻る</button>
+                <button class="confirm-button">予約確定</button>
+            </div>
+        </form>
     </div>
 
     <!-- Bootstrap JS -->
