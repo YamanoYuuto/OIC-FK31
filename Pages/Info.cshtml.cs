@@ -79,7 +79,7 @@ namespace OIC_FK31.Pages
             eDataTime = word[1] + word[4];
             string date = Input.last_name + "!" + Input.first_name + "!" + Input.email + "!" + Input.phone + "!" + Input.postal_code + "!" +
                 Input.prefecture + "!" + Input.city + "!" + Input.address + "!" + Input.building + "!" + int.Parse(id) + "!" + sDataTime + "!" + eDataTime;
-            return RedirectToPage("/Check", new {Date = date});
+            return RedirectToPage("/confirmation", new {Date = date});
         }
     }
 }

@@ -148,20 +148,20 @@
             }
         });
         </script>
-    @* <script>
+     <script>
         // ページロード時にlocalStorageからデータを取得して表示
-        document.addEventListener('DOMContentLoaded', function () {
-            const selectedTimes = JSON.parse(localStorage.getItem('selectedTimes') || "{}");
-            const reservationList = document.getElementById('reservationList');
+        // document.addEventListener('DOMContentLoaded', function () {
+        //     const selectedTimes = JSON.parse(localStorage.getItem('selectedTimes') || "{}");
+        //     const reservationList = document.getElementById('reservationList');
 
-            if (Object.keys(selectedTimes).length > 0) {
-                reservationList.innerHTML = Object.entries(selectedTimes)
-                    .map(([date, times]) => `${date}</b>: ${times.join('～')}`)
-                    .join('');
-            } else {
-                reservationList.innerHTML = '選択された日時がありません';
-            }
-        });
+        //     if (Object.keys(selectedTimes).length > 0) {
+        //         reservationList.innerHTML = Object.entries(selectedTimes)
+        //             .map(([date, times]) => `${date}</b>: ${times.join('～')}`)
+        //             .join('');
+        //     } else {
+        //         reservationList.innerHTML = '選択された日時がありません';
+        //     }
+        // });
         function saveReservationData(event) {
             event.preventDefault();
 
