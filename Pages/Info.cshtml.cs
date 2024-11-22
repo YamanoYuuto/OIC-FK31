@@ -1,24 +1,19 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Org.BouncyCastle.Tls;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Nodes;
+using Google;
 
 namespace OIC_FK31.Pages
 {
     public class InfoModel : PageModel
     {
         public int facilityid { get; set; }
-        public string _sDataTime {  get; set; }
-        public string _eDataTime { get; set; }
-        public IActionResult OnGet([FromQuery] string id,string DataTime)
-        {
-            facilityid = int.Parse(id);
-            string[] word = DataTime.Split('"','～');
-            _sDataTime = word[1] + word[3];
-            _eDataTime = word[1] + word[4];
-            return Page();
-        }
+        public string sDataTime { get; set; }
+        public string eDataTime { get; set; }
 
         [BindProperty]
         public InputModel Input { get; set; }
@@ -39,12 +34,14 @@ namespace OIC_FK31.Pages
 
             [Required(ErrorMessage = "メールアドレス（再入力用）を入力してください。")]
             [EmailAddress]
+            [Compare("email", ErrorMessage = "メールアドレスが一致しません。")]
             public string email_confirm { get; set; }
 
             [Required(ErrorMessage = "電話番号を入力してください。")]
             public string phone { get; set; }
 
             [Required(ErrorMessage = "電話番号（再入力用）を入力してください。")]
+            [Compare("phone", ErrorMessage = "電話番号が一致しません。")]
             public string phone_confirm { get; set; }
 
             [Required(ErrorMessage = "郵便番号を入力してください。")]
@@ -61,9 +58,28 @@ namespace OIC_FK31.Pages
 
             public string building { get; set; }
         }
-        public async Task<IActionResult> OnPostAsync()
+
+        public IActionResult OnGet([FromQuery] string id, string DataTime)
         {
-            return Redirect("/Check");
+            facilityid = int.Parse(id);
+            string[] word = DataTime.Split('"', '～');
+            sDataTime = word[1] + word[3];
+            eDataTime = word[1] + word[4];
+            return Page();
+        }
+
+        public IActionResult OnPostAsync([FromQuery] string id, string DataTime)
+        {
+            //if (ModelState.IsValid)
+            //{
+            //    return Page();
+            //}
+                string[] word = DataTime.Split('"', '～');
+            sDataTime = word[1] + word[3];
+            eDataTime = word[1] + word[4];
+            string date = Input.last_name + "!" + Input.first_name + "!" + Input.email + "!" + Input.phone + "!" + Input.postal_code + "!" +
+                Input.prefecture + "!" + Input.city + "!" + Input.address + "!" + Input.building + "!" + int.Parse(id) + "!" + sDataTime + "!" + eDataTime;
+            return RedirectToPage("/confirmation", new {Date = date});
         }
     }
 }

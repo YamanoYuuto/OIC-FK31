@@ -45,10 +45,10 @@ else
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
 app.UseAuthorization();
 app.UseSession();
+app.UseCookiePolicy();
 app.MapRazorPages();
 app.MapGet("/", () => Results.Redirect("/Identity/Account/Login"));
 

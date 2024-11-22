@@ -12,8 +12,8 @@
 }
 
 .system-name {
-    display: block;
-    font-size: 18px; /* 必要に応じてフォントサイズを調整 */
+        display: block;
+        font-size: 18px; /* 必要に応じてフォントサイズを調整 */
 }
 
 .system-name-en {
@@ -42,10 +42,6 @@
     justify-content: center;
 }
 
-/* コンテナ全体のスタイル */
-.container {
-    margin-top: 50px;
-}
 
 /* メニューリストのスタイル */
 .list-group-item {

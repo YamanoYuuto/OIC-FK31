@@ -6,7 +6,7 @@ namespace OIC_FK31.Data
     public class userDetail
     {
         public int UserDetailID { get; set; }
-        public int UserID { get; set; }
+        public string UserID { get; set; }
         public string LastName { get; set; }
         public string FirstName { get; set; }
         [EmailAddress]
