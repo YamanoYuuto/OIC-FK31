@@ -55,7 +55,7 @@ namespace OIC_FK31.Pages
 
             [Required(ErrorMessage = "’š–ÚE”Ô’n‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢B")]
             public string address { get; set; }
-
+            
             public string building { get; set; }
         }
 
@@ -70,16 +70,17 @@ namespace OIC_FK31.Pages
 
         public IActionResult OnPostAsync([FromQuery] string id, string DataTime)
         {
-            //if (ModelState.IsValid)
-            //{
-            //    return Page();
-            //}
+            ModelState.Remove("building");
+            if (ModelState.IsValid)
+            {
                 string[] word = DataTime.Split('"', '`');
-            sDataTime = word[1] + word[3];
-            eDataTime = word[1] + word[4];
-            string date = Input.last_name + "!" + Input.first_name + "!" + Input.email + "!" + Input.phone + "!" + Input.postal_code + "!" +
-                Input.prefecture + "!" + Input.city + "!" + Input.address + "!" + Input.building + "!" + int.Parse(id) + "!" + sDataTime + "!" + eDataTime;
-            return RedirectToPage("/confirmation", new {Date = date});
+                sDataTime = word[1] + word[3];
+                eDataTime = word[1] + word[4];
+                string date = Input.last_name + "!" + Input.first_name + "!" + Input.email + "!" + Input.phone + "!" + Input.postal_code + "!" +
+                    Input.prefecture + "!" + Input.city + "!" + Input.address + "!" + Input.building + "!" + int.Parse(id) + "!" + sDataTime + "!" + eDataTime;
+                return RedirectToPage("/confirmation", new { Date = date });
+            }
+            return Page();
         }
     }
 }
