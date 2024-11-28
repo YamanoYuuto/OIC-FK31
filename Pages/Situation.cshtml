@@ -88,10 +88,10 @@
                     <div>
                         <h5 class="fw-bold">@Situ.FacilityName</h5>
                         <p>大阪本部</p>
-                        <p>@Situ.StartTime.ToString("yy年MM月dd日")</p>
+                        <p>@Situ.StartTime.ToString("yyyy年MM月dd日")</p>
                         <p>@Situ.StartTime.ToString("hh時mm分") ～ @Situ.EndTime.ToString("hh時mm分")</p>
                         <p class="text-muted">予約済み</p>
-                        <a asp-page="/canncel" asp-route-id="@Situ.ReservationID" class="cancel-link">キャンセル手続きはこちら</a>
+                        <a asp-page="/Cancel" asp-route-id="@Situ.ReservationID" class="cancel-link">キャンセル手続きはこちら</a>
                     </div>
                 </div>
                 }
