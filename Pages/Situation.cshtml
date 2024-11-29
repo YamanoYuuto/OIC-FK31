@@ -78,7 +78,7 @@
                     ReUsTi.EndTime,
                     facility.FacilityName,
                     facility.FacilityphotoPath
-                }).ToList();
+                }).Where(x => x.UserID == Model.LoginUserId).ToList();
                 foreach (var Situ in list)
                 {
                 <div class="reservation-card">
