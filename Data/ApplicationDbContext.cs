@@ -12,7 +12,13 @@ namespace OIC_FK31.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
+
         }
+
+        public DbSet<facility> Facility {  get; set; }   
+        public DbSet<reservation> Reservation { get; set; }
+        public DbSet<userDetail> UserDetail { get; set; }
+        public DbSet<time> Time { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
