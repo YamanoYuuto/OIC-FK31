@@ -1,0 +1,167 @@
+﻿/* 全体のスタイル */
+body {
+    background-color: #f0f0f0;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* ナビゲーションバー */
+.navbar {
+    background-color: #e6ffd6;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 10px;
+}
+
+.img-fluid {
+    width: 30vh; /* 画像の幅を小さく設定 */
+    height: auto; /* アスペクト比を維持 */
+}
+
+/* コンテナ */
+.container {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 15px;
+}
+
+/* 確認メール再送信フォーム */
+.confirmation-email-form {
+    background-color: white;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+    /* タイトル */
+    .confirmation-email-form h1 {
+        text-align: center;
+        font-size: 1.8rem; /* 初期フォントサイズ */
+        margin-bottom: 15px;
+    }
+
+    /* メールアドレスの入力フォーム */
+    .confirmation-email-form p {
+        font-size: 1rem; /* 初期フォントサイズ */
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    /* 入力フォーム */
+    .confirmation-email-form .form-label {
+        font-size: 1rem;
+    }
+
+    .confirmation-email-form input {
+        width: 150%;
+     
+        max-width: 350px; /* 入力フォームの最大幅を固定 */
+        padding: 10px;
+        margin-bottom: 15px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        font-size: 1rem;
+        box-sizing: border-box;
+    }
+
+        /* プレースホルダーテキスト */
+        .confirmation-email-form input::placeholder {
+            color: #aaa;
+        }
+
+    /* ボタン */
+    .confirmation-email-form button {
+        width: 100%;
+        max-width: 350px; /* ボタンの最大幅を固定 */
+        padding: 10px;
+        background-color: #28a745;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 1rem;
+        cursor: pointer;
+    }
+
+        .confirmation-email-form button:hover {
+            background-color: #218838;
+        }
+
+    /* ログイン画面へのリンク */
+    .confirmation-email-form p a {
+        color: #007bff;
+        text-decoration: none;
+        font-size: 0.9rem;
+        text-align: center;
+        display: block;
+        margin-top: 10px;
+    }
+
+        .confirmation-email-form p a:hover {
+            text-decoration: underline;
+        }
+
+/* レスポンシブデザイン */
+@media screen and (max-width: 768px) {
+    /* タイトルのフォントサイズ */
+    .confirmation-email-form h1 {
+        font-size: 1.5rem;
+    }
+
+    /* 説明文のフォントサイズ */
+    .confirmation-email-form p {
+        font-size: 0.9rem;
+    }
+
+    /* 入力フォームのフォントサイズ */
+    .confirmation-email-form input {
+        font-size: 1rem; /* フォントサイズを固定 */
+        width: 100%; /* 幅を100%にして最大幅で表示 */
+        max-width: 350px; /* 最大幅を350pxに固定 */
+    }
+
+    /* ボタンのフォントサイズ */
+    .confirmation-email-form button {
+        font-size: 1rem;
+        width: 100%;
+        max-width: 350px; /* 最大幅を350pxに固定 */
+    }
+
+    /* ログインリンクのフォントサイズ */
+    .confirmation-email-form p a {
+        font-size: 0.8rem;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    /* タイトルのフォントサイズ */
+    .confirmation-email-form h1 {
+        font-size: 0.8rem;
+    }
+
+    /* 説明文のフォントサイズ */
+    .confirmation-email-form p {
+        font-size: 0.55rem;
+    }
+
+    /* 入力フォームのフォントサイズ */
+    .confirmation-email-form input {
+        font-size: 0.5rem;
+        width: 75%;
+        max-width: 200px; /* 最大幅を固定 */
+    }
+
+    /* ボタンのフォントサイズ */
+    .confirmation-email-form button {
+        font-size: 0.9rem;
+        width: 100%;
+        max-width: 250px; /* 最大幅を固定 */
+    }
+
+    /* ログインリンクのフォントサイズ */
+    .confirmation-email-form p a {
+        font-size: 0.75rem;
+    }
+}
