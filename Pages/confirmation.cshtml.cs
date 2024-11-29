@@ -1,22 +1,18 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using OIC_FK31.Data;
-using System;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
-using Org.BouncyCastle.Bcpg;
 
-namespace FK_31.Pages
+namespace WebApplication4.Pages
 {
-    public class CheckModel : PageModel
+    public class confirmationModel : PageModel
     {
         //_userManagerŠÖ˜A‚ð’Ç‰Á 23,27,29 + get‚É
         private readonly UserManager<IdentityUser> _userManager;
 
-        public CheckModel(UserManager<IdentityUser> userManager)
+        public confirmationModel(UserManager<IdentityUser> userManager)
         {
             _userManager = userManager;
         }
@@ -47,8 +43,6 @@ namespace FK_31.Pages
 
         [DataType(DataType.DateTime)]
         public DateTime endtime { get; set; }
-
-
         public async Task<IActionResult> OnGetAsync([FromRoute] string Date)
         {
             var user = await _userManager.GetUserAsync(User);
@@ -63,13 +57,13 @@ namespace FK_31.Pages
                     string[] date = Date.Split('!');
                     last_name = date[0];
                     first_name = date[1];
-                    //email = date[2];
-                    //phone = date[3];
-                    //postal_code = date[4];
-                    //prefecture = date[5];
-                    //city = date[6];
-                    //address = date[7];
-                    //building = date[8];
+                    email = date[2];
+                    phone = date[3];
+                    postal_code = date[4];
+                    prefecture = date[5];
+                    city = date[6];
+                    address = date[7];
+                    building = date[8];
                     facilityid = int.Parse(date[9]);
                     starttime = DateTime.Parse(date[10]);
                     endtime = DateTime.Parse(date[11]);
@@ -150,7 +144,7 @@ namespace FK_31.Pages
             await context.Reservation.AddAsync(Reservation);
             await context.SaveChangesAsync();
 
-            return RedirectToPage("/Thank", new {id = Reservation.ReservationID});
+            return RedirectToPage("/Thank", new { id = Reservation.ReservationID });
         }
     }
 }

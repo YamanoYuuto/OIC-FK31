@@ -1,4 +1,4 @@
-﻿@page
+﻿@page "/Thank/{id}"
 @model FK_31.Pages.ThankModel
 @{
 }
@@ -54,8 +54,15 @@
         <p>・ご予約いただきありがとうございます。下記の内容で承りました。</p>
         <div class="content-box" id="reservation-content">
             <!-- データベースの内容がここに表示されます -->
+            <p>名前: @Model.last_name @Model.first_name</p>
+            <p>日時: @Model.starttime.ToString("M")</p>
+            <p>施設名: @Model.facilityname</p>
+            <p>時間: @Model.starttime.ToString("t") ～ @Model.endtime.ToString("t")</p>
         </div>
-        <button class="back-button text-center" onclick="TopMenu.html">トップへ戻る</button>
+        <form method="post">
+            <button class="back-button text-center" >トップへ戻る</button>
+
+        </form>
     </div>
 
     <!-- Bootstrap JS -->
