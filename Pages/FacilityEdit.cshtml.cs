@@ -43,6 +43,10 @@ namespace OIC_FK31.Pages
                     ModelState.AddModelError("FileEx", "ファイルは.jpgのみです。");
                 }
             }
+            if (Facility.OpeningTime > Facility.ClosingTime)
+            {
+                ModelState.AddModelError("TimeError", "開館・閉館時間を正しく入力してください");
+            }
 
             if (!ModelState.IsValid)
             {

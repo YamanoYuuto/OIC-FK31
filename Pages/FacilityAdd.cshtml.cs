@@ -33,7 +33,7 @@ namespace OIC_FK31.Pages
             }
             if(FacilityAdd.OpeningTime > FacilityAdd.ClosingTime)
             {
-                ModelState.AddModelError("TimeError", "•ÂŠÙŠÔ‚æ‚è•ÂŠÙŠÔ‚Ì•û‚ª’x‚¢‚Å‚·B");
+                ModelState.AddModelError("TimeError", "ŠJŠÙE•ÂŠÙŠÔ‚ğ³‚µ‚­“ü—Í‚µ‚Ä‚­‚¾‚³‚¢");
             }
 
             if (!ModelState.IsValid)
