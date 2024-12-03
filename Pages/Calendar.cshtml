@@ -108,59 +108,43 @@
                 },
                 selectable: true,
                 select: function (info) {
-                    // 日付と開始時間を取得
+                    // Clear previous selection
+                    calendar.getEvents().forEach(event => {
+                        if (event.display === 'background') {
+                            event.remove();
+                        }
+                    });
+                    selectedTimes = {};
+
                     const date = info.start.toLocaleDateString("ja-JP", { year: 'numeric', month: 'long', day: 'numeric' });
                     const startTime = info.start.toLocaleTimeString("ja-JP", { hour: '2-digit', minute: '2-digit' });
+                    const endTime = info.end.toLocaleTimeString("ja-JP", { hour: '2-digit', minute: '2-digit' });
 
-                    // 「00:00」の場合は追加せず、選択を無視
-                    if (startTime === "00:00")
-                        return;
+                    if (startTime === "00:00") return;
 
-                    // 初期化と重複チェック
-                    if (!selectedTimes[date]) {
-                        selectedTimes[date] = [];
-                    }
+                    selectedTimes[date] = [`${startTime} ～ ${endTime}`];
 
-                    // 選択した時間帯が既に存在する場合は解除
-                    const timeIndex = selectedTimes[date].indexOf(startTime);
-                    if (timeIndex > -1) {
-                        selectedTimes[date].splice(timeIndex, 1);
-                        // 背景イベントの削除
-                        calendar.getEvents().forEach(event => {
-                            if (
-                                event.start.getTime() === info.start.getTime() &&
-                                event.display === 'background'
-                            ) {
-                                event.remove();
-                            }
-                        });
-                    } else {
-                        // 未選択の時間のみ追加
-                        selectedTimes[date].push(startTime);
-
-                        // 背景色で選択したスロットを緑色に表示
-                        let event = {
-                            start: info.start,
-                            end: info.end,
-                            display: 'background',
-                            color: 'green'
-                        };
-                        calendar.addEvent(event);
-                    }
+                    let event = {
+                        start: info.start,
+                        end: info.end,
+                        display: 'background',
+                        color: 'green'
+                    };
+                    calendar.addEvent(event);
                 }
             });
 
             calendar.render();
 
-            // 決定ボタンを配置
             document.querySelector('h2').insertAdjacentHTML('beforebegin', '<div class="text-center mb-3"><button id="confirmButton" class="btn btn-primary btn-lg">決定</button></div>');
 
-            // 確認ボタンのイベントリスナー
             document.getElementById('confirmButton').addEventListener('click', function () {
                 if (Object.keys(selectedTimes).length > 0) {
                     Swal.fire({
                         title: 'これらの時間を選択しますか？',
-                        html: Object.entries(selectedTimes).map(([date, times]) => `<b>${date}</b>: ${times.join(', ')}`).join('<br>'),
+                        html: Object.entries(selectedTimes).map(([date, times]) => {
+                            return `<b>${date}</b>: ${times.join(', ')}`;
+                        }).join('<br>'),
                         icon: 'question',
                         showCancelButton: true,
                         confirmButtonColor: '#3085d6',
@@ -170,8 +154,12 @@
                     }).then((result) => {
                         if (result.isConfirmed) {
                             // 選択した時間を保存
-                            localStorage.setItem('selectedTimes', JSON.stringify(selectedTimes));
-                            window.location.href = "/Info";
+                            // sessionStorage.setItem('selectedTimes', JSON.stringify(selectedTimes));
+                            // 選択した時間をURLパラメーターに追加
+                            const url = new URL(window.location.href);
+                            url.pathname = '/Info';
+                            url.searchParams.set('DataTime', String(JSON.stringify(selectedTimes)));
+                            window.location.href = url;
                         }
                     });
                 } else {
@@ -186,6 +174,7 @@
             });
         });
     </script>
+
 
 
     <!-- Bootstrap JS -->
@@ -228,7 +217,56 @@
             }
         });
     </script>
+        <script>
+                document.addEventListener('DOMContentLoaded', () => {
+                    // ページがロードされたときに検索条件を復元する
+                    const facilityName = localStorage.getItem('facilityName');
+            const genre = localStorage.getItem('genre');
+            const location = localStorage.getItem('location');
+
+            if (facilityName) {
+                document.querySelector('input[placeholder="施設名"]').value = facilityName;
+                    }
+            if (genre) {
+                document.querySelector('select.form-select:nth-of-type(1)').value = genre;
+                    }
+            if (location) {
+                document.querySelector('select.form-select:nth-of-type(2)').value = location;
+                    }
+
+                    // 検索ボタンがクリックされたときに検索条件を保存する
+                    document.querySelector('.btn.btn-primary').addEventListener('click', () => {
+                        const facilityNameInput = document.querySelector('input[placeholder="施設名"]').value;
+            const genreSelect = document.querySelector('select.form-select:nth-of-type(1)').value;
+            const locationSelect = document.querySelector('select.form-select:nth-of-type(2)').value;
+
+            localStorage.setItem('facilityName', facilityNameInput);
+            localStorage.setItem('genre', genreSelect);
+            localStorage.setItem('location', locationSelect);
+                    });
+                });
 
 
+                // 施設の名前をlocalStorageに保存する処理
+                document.querySelectorAll('.date-selection-button').forEach(button => {
+                button.addEventListener('click', function (event) {
+                    event.preventDefault(); // リンクのデフォルト動作を防ぐ
+
+                    // data-facility-name属性から施設の名前を取得
+                    const facilityName = this.getAttribute('data-facility-name');
+
+                    // localStorageに施設の名前を保存
+                    localStorage.setItem('selectedFacilityName', facilityName);
+
+                    // data-url属性からURLを取得し、遷移
+                    const url = this.getAttribute('data-url');
+                    if (url) {
+                        window.location.href = url;
+                    } else {
+                        console.error('URLが見つかりません。');
+                    }
+                });
+                });
+    </script>
 </body>
 </html>

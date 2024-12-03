@@ -1,0 +1,41 @@
+﻿@page
+@model OIC_FK31.Pages.FacilityIndexModel
+@{
+}
+<h1>施設一覧</h1>
+
+<p>
+    <a asp-page="FacilityAdd">作成</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                施設名
+            </th>
+            <th>
+                住所
+            </th>
+            <th>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Facility)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FacilityName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FacilityAddress)
+                </td>
+                <td>
+                    <a asp-page="./FacilityEdit" asp-route-id="@item.FacilityID">編集</a> |
+                    <a asp-page="./FacilityDelete" asp-route-id="@item.FacilityID">詳細・削除</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
