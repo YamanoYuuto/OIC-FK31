@@ -91,7 +91,7 @@
                         <p>@Situ.StartTime.ToString("yy年MM月dd日")</p>
                         <p>@Situ.StartTime.ToString("hh時mm分") ～ @Situ.EndTime.ToString("hh時mm分")</p>
                         <p class="text-muted">予約済み</p>
-                        <a asp-page="/canncel" asp-route-id="@Situ.ReservationID" class="cancel-link">キャンセル手続きはこちら</a>
+                        <a id="cancel" asp-page="/canncel" asp-route-id="@Situ.ReservationID" class="cancel-link">キャンセル手続きはこちら</a>
                     </div>
                 </div>
                 }
@@ -133,5 +133,30 @@
                 window.history.back();
             }
         </script>
+    <script>
+        document.getElementById("cancel").addEventListener("click", function(event) {
+          event.preventDefault(); // デフォルトのリンク動作を防ぐ
+          Swal.fire({
+            title: "キャンセルしますか？",
+            text: "",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "はい",
+            cancelButtonText: "いいえ",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              Swal.fire({
+                title: "キャンセルしました",
+                text: "",
+                icon: ""
+              }).then(() => {
+                        window.location.href = "/Situation"; 
+              });
+            }
+          });
+        });
+    </script>
     </body>
 </html>
