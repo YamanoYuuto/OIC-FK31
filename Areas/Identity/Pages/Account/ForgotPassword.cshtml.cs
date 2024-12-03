@@ -79,7 +79,10 @@ namespace OIC_FK31.Areas.Identity.Pages.Account
                 //    "Reset Password",
                 //    $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
-                SendMailAsync(Input.Email, $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+
+
+                //メールに表示されるメッセージ
+                SendMailAsync(Input.Email, $"下記URLから新しいパスワードを設定してください\n{HtmlEncoder.Default.Encode(callbackUrl)}");
                 return RedirectToPage("./ForgotPasswordConfirmation");
             }
 
