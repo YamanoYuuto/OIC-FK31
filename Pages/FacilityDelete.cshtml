@@ -1,0 +1,59 @@
+﻿@page
+@model OIC_FK31.Pages.FacilityDeleteModel
+@{
+}
+<h1>Delete</h1>
+
+<div>
+    <h4>Movie</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            <a>施設名</a>
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Facilities.FacilityName)
+        </dd>
+        <dt class="col-sm-2">
+            <a>住所</a>
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Facilities.FacilityAddress)
+        </dd>
+        <dt class="col-sm-2">
+            <a>電話番号</a>
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Facilities.FacilityPhone)
+        </dd>
+        <dt class="col-sm-2">
+            <a>開館時間</a>
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Facilities.OpeningTime)
+        </dd>
+        <dt class="col-sm-2">
+            <a>閉館時間</a>
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Facilities.ClosingTime)
+        </dd>
+        <dt class="col-sm-2">
+            <a>郵便番号</a>
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Facilities.FacilityPostCode)
+        </dd>
+        <dt class="col-sm-2">
+            <a>写真パス</a>
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Facilities.FacilityphotoPath)
+        </dd>
+    </dl>
+
+    <form method="post">
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-page="./FacilityIndex">戻る</a>
+    </form>
+</div>

@@ -11,7 +11,7 @@ namespace OIC_FK31.Pages
     public class FacilitiesModel : PageModel
     {
         public IList<facility> Facilities { get; set; } = default!;
-        public async Task OnGetAsync()
+        public async Task OnGetAsync([FromQuery] string searchtext = "", string searchaddress = "")
         {
             var context = new ApplicationDbContext();
             if(context.Facility.Count() == 0)
@@ -49,7 +49,8 @@ namespace OIC_FK31.Pages
                     });
                 context.SaveChanges();
             }
-            var ficility = context.Facility;
+            var ficility = context.Facility.Where(x => x.FacilityAddress.Contains(searchaddress) &&
+            x.FacilityName.Contains(searchtext));
             //if (!string.IsNullOrEmpty(MovieGenre))
             //{
             //    movies = movies.Where(x => x.Genre == MovieGenre);

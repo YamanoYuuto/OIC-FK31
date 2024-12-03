@@ -48,10 +48,7 @@ namespace FK_31.Pages
 
                 facilityname = facility.FacilityName;
 
-                SendMailAsync(userdetail.Email, $@"–¼‘O: {last_name} {first_name}
-                                                   “ú: {starttime.ToString("M")}
-                                                   {İ–¼: {facilityname}
-                                                   ŠÔ: {starttime.ToString("t")} ` {endtime.ToString("t")}");
+                SendMailAsync(userdetail.Email, $"–¼‘O: {last_name} {first_name}\n\r“ú: {starttime.ToString("M")}\n\r{İ–¼: {facilityname}\n\r ŠÔ: {starttime.ToString("t")} ` {endtime.ToString("t")}");
             }
             catch (Exception ex)
             {
