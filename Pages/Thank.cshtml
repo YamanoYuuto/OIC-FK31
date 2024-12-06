@@ -24,24 +24,24 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="/Reserve">今すぐ予約</a>
+                        <a class="nav-link" href="/Facilities">今すぐ予約</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/ReservationStatus">予約状況確認</a>
+                        <a class="nav-link" href="/Situation">予約状況確認</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/CancelReservation">予約キャンセル</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            管理者の方
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="/FacilityRegistration">施設の登録と変更</a></li>
-                            <li><a class="dropdown-item" href="/UserManagement">使用者情報管理</a></li>
-                            <li><a class="dropdown-item" href="/ReportOutput">事務員用レポート出力</a></li>
-                        </ul>
-                    </li>
+                    @if (Model.AdminFlg)
+                    {
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                管理者の方
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="/FacilityIndex">施設の登録と変更</a></li>
+                                <li><a class="dropdown-item" href="/UserManagement">使用者情報管理</a></li>
+                                <li><a class="dropdown-item" href="/ReportOutput">事務員用レポート出力</a></li>
+                            </ul>
+                        </li>
+                    }
                     <li class="nav-item">
                         <a id="logoutButton" class="nav-link" asp-page="/Login">ログアウト</a>
                     </li>

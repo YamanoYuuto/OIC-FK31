@@ -86,7 +86,7 @@ namespace OIC_FK31.Areas.Identity.Pages.Account
             //    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
             SendMailAsync(Input.Email, callbackUrl);
 
-            ModelState.AddModelError(string.Empty, "Verification email sent. Please check your email.");
+            ModelState.AddModelError(string.Empty, "確認メールを送信しました。");
             return Page();
         }
         static async void SendMailAsync(string email, string text)

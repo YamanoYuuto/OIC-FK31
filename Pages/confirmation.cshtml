@@ -28,21 +28,21 @@
                         <a class="nav-link" href="/Facilities">今すぐ予約</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/ReservationStatus">予約状況確認</a>
+                        <a class="nav-link" href="/Situation">予約状況確認</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/CancelReservation">予約キャンセル</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            管理者の方
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="/FacilityRegistration">施設の登録と変更</a></li>
-                            <li><a class="dropdown-item" href="/UserManagement">使用者情報管理</a></li>
-                            <li><a class="dropdown-item" href="/ReportOutput">事務員用レポート出力</a></li>
-                        </ul>
-                    </li>
+                    @if (Model.AdminFlg)
+                    {
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                管理者の方
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="/FacilityIndex">施設の登録と変更</a></li>
+                                <li><a class="dropdown-item" href="/UserManagement">使用者情報管理</a></li>
+                                <li><a class="dropdown-item" href="/ReportOutput">事務員用レポート出力</a></li>
+                            </ul>
+                        </li>
+                    }
                     <li class="nav-item">
                         <a id="logoutButton" class="nav-link" href="Login.html">ログアウト</a>
                     </li>
@@ -51,9 +51,12 @@
         </div>
     </nav>
     <main class="container mt-5">
-        <h1>予約情報</h1>
-        <button class="back-button" onclick="history.back()">← 戻る</button>
+        <h2 class="text-center mb-4">予約情報</h2>
 
+        <div class="mb-4 text-center">
+            <a onclick="history.back()" class="btn btn-outline-secondary">戻る</a>
+        </div>
+        <div asp-validation-summary="All" class="text-danger"></div>
         <!-- 予約情報セクション -->
         <section class="reservation-section mb-4">
             <h3 class="mb-3">予約情報</h3>

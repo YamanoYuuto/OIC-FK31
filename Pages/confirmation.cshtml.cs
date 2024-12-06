@@ -1,8 +1,10 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using OIC_FK31.Data;
 using System.ComponentModel.DataAnnotations;
+using System.Data;
 using System.Security.Claims;
 
 namespace WebApplication4.Pages
@@ -16,6 +18,8 @@ namespace WebApplication4.Pages
         {
             _userManager = userManager;
         }
+
+        public bool AdminFlg { get; set; } = false;
 
         public string last_name { get; set; }
 
@@ -50,6 +54,11 @@ namespace WebApplication4.Pages
             {
                 return Redirect("/Identity/Account/Login");
             }
+            if (await _userManager.IsInRoleAsync(user, "Admin") == true)
+            {
+                AdminFlg = true;
+            }
+
             if (Date != null)
             {
                 try
@@ -105,46 +114,141 @@ namespace WebApplication4.Pages
             }
 
             var context = new ApplicationDbContext();
-
-            var Time = new time
+            using(var dbcontextTransaction = context.Database.BeginTransaction(IsolationLevel.Serializable))
             {
-                FacilityID = facilityid,
-                StartTime = starttime,
-                EndTime = endtime
-            };
+                try
+                {
+                    bool timeflg = false;
+                    var day = DateTime.Parse(starttime.ToString("t"));
+                    var times = context.Time.Where(x => x.FacilityID == facilityid && x.StartTime == day).ToList();
+                    foreach (var i in times)
+                    {
+                        if (i.StartTime >= endtime || i.EndTime <= starttime)
+                        {
 
-            await context.Time.AddAsync(Time);
-            await context.SaveChangesAsync();
-            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var UserDatail = new userDetail
-            {
-                UserID = userid,
-                LastName = last_name,
-                FirstName = first_name,
-                Email = email,
-                Phone = phone,
-                PostalCode = postal_code,
-                Prefecture = prefecture,
-                City = city,
-                Address = address,
-                Building = building
-            };
+                        }
+                        else
+                        {
+                            timeflg = true;
+                        }
+                    }
+                    if (timeflg)
+                    {
+                        ModelState.AddModelError("time", "‚»‚ÌŽžŠÔ‚Í‚·‚Å‚É—\–ñ‚³‚ê‚Ä‚¢‚Ü‚·");
+                        dbcontextTransaction.Rollback();
+                        return Page();
+                    }
 
-            await context.UserDetail.AddAsync(UserDatail);
-            await context.SaveChangesAsync();
+                    var Time = new time
+                    {
+                        FacilityID = facilityid,
+                        StartTime = starttime,
+                        EndTime = endtime
+                    };
 
-            var Reservation = new reservation
-            {
-                UserDetailID = UserDatail.UserDetailID,
-                TimeID = Time.TimeID,
-                BookingDate = DateTime.Now,
-                Application = "‚È‚µ",
-                Number = 0
-            };
-            await context.Reservation.AddAsync(Reservation);
-            await context.SaveChangesAsync();
+                    await context.Time.AddAsync(Time);
+                    await context.SaveChangesAsync();
+                    var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                    var UserDatail = new userDetail
+                    {
+                        UserID = userid,
+                        LastName = last_name,
+                        FirstName = first_name,
+                        Email = email,
+                        Phone = phone,
+                        PostalCode = postal_code,
+                        Prefecture = prefecture,
+                        City = city,
+                        Address = address,
+                        Building = building
+                    };
 
-            return RedirectToPage("/Thank", new { id = Reservation.ReservationID });
+                    await context.UserDetail.AddAsync(UserDatail);
+                    await context.SaveChangesAsync();
+
+                    var Reservation = new reservation
+                    {
+                        UserDetailID = UserDatail.UserDetailID,
+                        TimeID = Time.TimeID,
+                        BookingDate = DateTime.Now,
+                        Application = "‚È‚µ",
+                        Number = 0
+                    };
+                    await context.Reservation.AddAsync(Reservation);
+                    await context.SaveChangesAsync();
+                    dbcontextTransaction.Commit();
+
+                    return RedirectToPage("/Thank", new { id = Reservation.ReservationID });
+                }
+                catch
+                {
+                    ModelState.AddModelError("error", "ƒGƒ‰[‚ª‹N‚«‚Ü‚µ‚½B");
+                    return Page();
+                }
+            }
+            //bool timeflg = false;
+            //var day = DateTime.Parse(starttime.ToString("t"));
+            //var times = context.Time.Where(x => x.FacilityID == facilityid && x.StartTime == day).ToList();
+            //foreach (var i in times)
+            //{
+            //    if (i.StartTime >= endtime || i.EndTime <= starttime)
+            //    {
+
+            //    }
+            //    else
+            //    {
+            //        timeflg = true;
+            //    }
+            //}
+            //if (timeflg)
+            //{
+            //    ModelState.AddModelError("time", "‚»‚ÌŽžŠÔ‚Í‚·‚Å‚É—\–ñ‚³‚ê‚Ä‚¢‚Ü‚·");
+            //    return Page();
+            //}
+
+            //var Time = new time
+            //{
+            //    FacilityID = facilityid,
+            //    StartTime = starttime,
+            //    EndTime = endtime
+            //};
+
+            //await context.Time.AddAsync(Time);
+            //await context.SaveChangesAsync();
+            //var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            //var UserDatail = new userDetail
+            //{
+            //    UserID = userid,
+            //    LastName = last_name,
+            //    FirstName = first_name,
+            //    Email = email,
+            //    Phone = phone,
+            //    PostalCode = postal_code,
+            //    Prefecture = prefecture,
+            //    City = city,
+            //    Address = address,
+            //    Building = building
+            //};
+
+            //await context.UserDetail.AddAsync(UserDatail);
+            //await context.SaveChangesAsync();
+
+            //var Reservation = new reservation
+            //{
+            //    UserDetailID = UserDatail.UserDetailID,
+            //    TimeID = Time.TimeID,
+            //    BookingDate = DateTime.Now,
+            //    Application = "‚È‚µ",
+            //    Number = 0
+            //};
+            //await context.Reservation.AddAsync(Reservation);
+            //await context.SaveChangesAsync();
+
+            //int reasevation = datacreate();
+            //if(reasevation == -1)
+            //    return Page();
+
+            //return RedirectToPage("/Thank", new { id = Reservation.ReservationID });
         }
     }
 }

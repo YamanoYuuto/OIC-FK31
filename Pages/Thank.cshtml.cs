@@ -7,11 +7,20 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using OIC_FK31.Data;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.ExceptionServices;
+using Microsoft.AspNetCore.Identity;
 
 namespace FK_31.Pages
 {
     public class ThankModel : PageModel
     {
+        private readonly UserManager<IdentityUser> _userManager;
+        public ThankModel(UserManager<IdentityUser> userManager)
+        {
+            _userManager = userManager;
+        }
+
+        public bool AdminFlg { get; set; } = false;
+
         public string last_name { get; set; }
         public string first_name { get; set; }
         [DataType(DataType.DateTime)]
@@ -21,6 +30,16 @@ namespace FK_31.Pages
         public string facilityname { get; set; }
         public async Task<IActionResult> OnGetAsync([FromRoute] int id)
         {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return Redirect("/Identity/Account/Login");
+            }
+            if (await _userManager.IsInRoleAsync(user, "Admin") == true)
+            {
+                AdminFlg = true;
+            }
+
             var context = new ApplicationDbContext();
             try
             {
