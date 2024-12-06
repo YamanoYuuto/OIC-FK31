@@ -6,11 +6,20 @@ using Org.BouncyCastle.Tls;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Nodes;
 using Google;
+using Microsoft.AspNetCore.Identity;
 
 namespace OIC_FK31.Pages
 {
     public class InfoModel : PageModel
     {
+        private readonly UserManager<IdentityUser> _userManager;
+        public InfoModel(UserManager<IdentityUser> userManager)
+        {
+            _userManager = userManager;
+        }
+
+        public bool AdminFlg { get; set; } = false;
+
         public int facilityid { get; set; }
         public string sDataTime { get; set; }
         public string eDataTime { get; set; }
@@ -59,8 +68,18 @@ namespace OIC_FK31.Pages
             public string building { get; set; }
         }
 
-        public IActionResult OnGet([FromQuery] string id, string DataTime)
+        public async Task<IActionResult> OnGet([FromQuery] string id, string DataTime)
         {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return Redirect("/Identity/Account/Login");
+            }
+            if (await _userManager.IsInRoleAsync(user, "Admin") == true)
+            {
+                AdminFlg = true;
+            }
+
             facilityid = int.Parse(id);
             string[] word = DataTime.Split('"', 'Å`');
             sDataTime = word[1] + word[3];

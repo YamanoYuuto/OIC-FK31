@@ -19,6 +19,8 @@ namespace WebApplication4.Pages
             _userManager = userManager;
         }
 
+        public bool AdminFlg { get; set; } = false;
+
         public string last_name { get; set; }
 
         public string first_name { get; set; }
@@ -52,6 +54,11 @@ namespace WebApplication4.Pages
             {
                 return Redirect("/Identity/Account/Login");
             }
+            if (await _userManager.IsInRoleAsync(user, "Admin") == true)
+            {
+                AdminFlg = true;
+            }
+
             if (Date != null)
             {
                 try
