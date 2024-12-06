@@ -4,7 +4,7 @@
       "commandName": "Project",
       "launchBrowser": true,
       "dotnetRunMessages": true,
-      "applicationUrl": "http://localhost:5258"
+      "applicationUrl": "http://172.20.10.4:5258"
     },
     "https": {
       "commandName": "Project",
