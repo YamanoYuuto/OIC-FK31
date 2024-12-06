@@ -80,6 +80,15 @@ namespace OIC_FK31.Pages
                 AdminFlg = true;
             }
 
+            if (DataTime == null)
+            {
+                return BadRequest();
+            }
+            if (id == null)
+            {
+                return BadRequest();
+            }
+
             facilityid = int.Parse(id);
             string[] word = DataTime.Split('"', 'Å`');
             sDataTime = word[1] + word[3];
