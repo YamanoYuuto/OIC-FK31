@@ -3,62 +3,123 @@
 @{
 }
 
-<h1>追加</h1>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>施設予約システム - メール認証完了</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/FacilityAdd.css" />
+    <!-- SweetAlert2 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet" />
+</head>
+<body>
+    <!-- ナビゲーションバー -->
+    <nav class="navbar">
+        <img src="~/images/logo.png" alt="施設予約システム" class="img-fluid" />
+    </nav>
 
-<h4></h4>
-
-<div class="row">
-    <div class="col-md-4">
-        <form method="post" enctype="multipart/form-data">
-            <div asp-validation-summary="All" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="FacilityAdd.FacilityName" class="control-label">施設名</label>
-                <input asp-for="FacilityAdd.FacilityName" class="form-control" />
-                <span asp-validation-for="FacilityAdd.FacilityName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FacilityAdd.FacilityAddress" class="control-label">住所</label>
-                <input asp-for="FacilityAdd.FacilityAddress" class="form-control" />
-                <span asp-validation-for="FacilityAdd.FacilityAddress" class="text-danger"></span>
-            </div>
-             <div class="form-group">
-                <label asp-for="FacilityAdd.FacilityPhone" class="control-label">電話番号</label>
-                <input asp-for="FacilityAdd.FacilityPhone" class="form-control" />
-                <span asp-validation-for="FacilityAdd.FacilityPhone" class="text-danger"></span>
-            </div>
-             <div class="form-group">
-                <label asp-for="FacilityAdd.OpeningTime" class="control-label">開館時間</label>
-                <input type="time" asp-for="FacilityAdd.OpeningTime" class="form-control" />
-                <span asp-validation-for="FacilityAdd.OpeningTime" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FacilityAdd.ClosingTime" class="control-label">閉館時間</label>
-                <input type="time"  asp-for="FacilityAdd.ClosingTime" class="form-control" />
-                <span asp-validation-for="FacilityAdd.ClosingTime" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FacilityAdd.FacilityPostCode" class="control-label">郵便番号</label>
-                <input asp-for="FacilityAdd.FacilityPostCode" class="form-control" />
-                <span asp-validation-for="FacilityAdd.FacilityPostCode" class="text-danger"></span>
-            </div>
-                @* <div class="form-group">
-                    <label asp-for="FacilityAdd.FacilityphotoPath" class="control-label"></label>
-                    <input asp-for="FacilityAdd.FacilityphotoPath" class="form-control" />
-                    <span asp-validation-for="FacilityAdd.FacilityphotoPath" class="text-danger"></span>
-                </div> *@
-            <div class="form-group">
-                <label>施設写真　※.jpgのみ</label>
-                <input type="file" name="photofile" accept=".jpg"/>
-            </div>
-            
-            <div class="form-group">
-                <input type="submit" value="追加" class="btn btn-primary" />
-            </div>
-        </form>
+    <div class="backbtn mt-4">
+        <a asp-page="./FacilityIndex" class="btn btn-outline-secondary">施設一覧に戻る</a>
     </div>
-</div>
 
-<div>
-    <a asp-page="./FacilityIndex">施設一覧に戻る</a>
-</div>
+    <h1 class="my-4">施設追加</h1>
 
+    <div class="row">
+        <div class="col-lg-6 mx-auto">
+            <form id="facilityForm" method="post" enctype="multipart/form-data">
+                <div asp-validation-summary="All" class="text-danger mb-3"></div>
+
+                <div class="mb-3">
+                    <label asp-for="FacilityAdd.FacilityName" class="form-label">施設名</label>
+                    <input asp-for="FacilityAdd.FacilityName" class="form-control" required />
+                    <span asp-validation-for="FacilityAdd.FacilityName" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="FacilityAdd.FacilityAddress" class="form-label">住所</label>
+                    <input asp-for="FacilityAdd.FacilityAddress" class="form-control" required />
+                    <span asp-validation-for="FacilityAdd.FacilityAddress" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="FacilityAdd.FacilityPhone" class="form-label">電話番号</label>
+                    <input asp-for="FacilityAdd.FacilityPhone" class="form-control" required />
+                    <span asp-validation-for="FacilityAdd.FacilityPhone" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="FacilityAdd.OpeningTime" class="form-label">開館時間</label>
+                    <input type="time" asp-for="FacilityAdd.OpeningTime" class="form-control" required />
+                    <span asp-validation-for="FacilityAdd.OpeningTime" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="FacilityAdd.ClosingTime" class="form-label">閉館時間</label>
+                    <input type="time" asp-for="FacilityAdd.ClosingTime" class="form-control" required />
+                    <span asp-validation-for="FacilityAdd.ClosingTime" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="FacilityAdd.FacilityPostCode" class="form-label">郵便番号</label>
+                    <input asp-for="FacilityAdd.FacilityPostCode" class="form-control" required />
+                    <span asp-validation-for="FacilityAdd.FacilityPostCode" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">施設写真 <small class="text-muted">(※.jpg のみ対応)</small></label>
+                    <input type="file" name="photofile" class="form-control" accept=".jpg" />
+                </div>
+
+                <div class="d-grid">
+                    <button type="button" class="btn btn-primary" id="addButton">追加</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.getElementById("addButton").addEventListener("click", function (event) {
+            event.preventDefault(); // デフォルトのリンク動作を防ぐ
+
+            // フォームの必須入力項目チェック
+            var form = document.getElementById("facilityForm");
+            if (form.checkValidity()) {
+                // 入力が正しければ、確認ダイアログを表示
+                Swal.fire({
+                    title: "施設情報を追加しますか？",
+                    text: "追加してもよろしいですか？",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "はい",
+                    cancelButtonText: "いいえ",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Swal.fire({
+                            title: "施設情報が追加されました",
+                            icon: "success",
+                        }).then(() => {
+                            form.submit(); // フォームを送信
+                        });
+                    }
+                });
+            } else {
+                // 入力に不備がある場合は、警告を表示
+                Swal.fire({
+                    title: "入力エラー",
+                    text: "すべての必須項目を正しく入力してください。",
+                    icon: "error",
+                    confirmButtonColor: "#3085d6",
+                });
+            }
+        });
+    </script>
+</body>
+</html>

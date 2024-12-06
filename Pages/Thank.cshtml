@@ -11,7 +11,8 @@
     <title>施設予約システム - Thank you</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="~/css/Thank.css" />
+    <link rel="stylesheet" href="~/css/Info.css">
+    <link rel="stylesheet" href="~/css/confirmation.css">
 </head>
 <body>
     <nav class="navbar navbar-expand-lg">
@@ -50,17 +51,19 @@
     </nav>
 
     <div class="container">
-        <h1 class="text-center">予約完了</h1>
+        <h1>予約完了</h1>
         <p>・ご予約いただきありがとうございます。下記の内容で承りました。</p>
         <div class="content-box" id="reservation-content">
             <!-- データベースの内容がここに表示されます -->
-            <p>名前: @Model.last_name @Model.first_name</p>
-            <p>日時: @Model.starttime.ToString("M")</p>
-            <p>施設名: @Model.facilityname</p>
-            <p>時間: @Model.starttime.ToString("t") ～ @Model.endtime.ToString("t")</p>
+            <div class="info-box p-3 border rounded">
+                <p>名前: @Model.last_name @Model.first_name</p>
+                <p>日時: @Model.starttime.ToString("M")</p>
+                <p>施設名: @Model.facilityname</p>
+                <p>時間: @Model.starttime.ToString("t") ～ @Model.endtime.ToString("t")</p>
+            </div>
         </div>
         <form method="post">
-            <button class="back-button text-center" >トップへ戻る</button>
+            <button class="submit-button">トップへ戻る</button>
 
         </form>
     </div>

@@ -164,7 +164,7 @@ namespace OIC_FK31.Areas.Identity.Pages.Account.Manage
                 "Confirm your email",
                 $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
-            StatusMessage = "Verification email sent. Please check your email.";
+            StatusMessage = "確認メールを送信しました。\nご確認ください";
             return RedirectToPage();
         }
     }
