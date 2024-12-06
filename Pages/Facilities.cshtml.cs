@@ -1,4 +1,6 @@
+using FK_31.Pages;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -10,9 +12,28 @@ namespace OIC_FK31.Pages
 {
     public class FacilitiesModel : PageModel
     {
-        public IList<facility> Facilities { get; set; } = default!;
-        public async Task OnGetAsync([FromQuery] string searchtext = "", string searchaddress = "")
+        private readonly UserManager<IdentityUser> _userManager;
+        public FacilitiesModel(UserManager<IdentityUser> userManager)
         {
+            _userManager = userManager;
+        }
+
+        public bool AdminFlg { get; set; } = false;
+
+        public IList<facility> Facilities { get; set; } = default!;
+
+        public async Task<IActionResult> OnGetAsync([FromQuery] string searchtext = "", string searchaddress = "")
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return Redirect("/Identity/Account/Login");
+            }
+            if (await _userManager.IsInRoleAsync(user, "Admin") == true)
+            {
+                AdminFlg = true;
+            }
+
             var context = new ApplicationDbContext();
             if(context.Facility.Count() == 0)
             {
@@ -57,6 +78,7 @@ namespace OIC_FK31.Pages
             //}
             
             Facilities = await ficility.ToListAsync();
+            return Page();
         }
     }
 }
