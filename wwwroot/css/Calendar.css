@@ -41,3 +41,28 @@
     background-color: white;
 }
 
+/*
+    @media (max-width: 768px) {
+    /* スマホ表示時のレイアウト調整 */
+/*.navbar-nav {
+    flex-direction: row; /* メニューアイテムを横並び 
+    justify-content: space-between; /* ボタン間にスペース
+} */
+    /* #calendar {
+    width: 100%; /* カレンダーが画面にフィットするように 
+    margin: 0 auto;
+    }/*
+
+/*.button-group {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px; /* ボタン間のスペース 
+     width: 100%;
+    }
+
+   /* .navbar-content {
+    flex-wrap: wrap; /* スマホ画面ではアイテムを折り返し
+    } */
+
+
+
