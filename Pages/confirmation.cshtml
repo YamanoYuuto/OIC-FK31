@@ -18,7 +18,10 @@
 <body>
     <nav class="navbar navbar-expand-lg">
         <div class="container-fluid navbar-content">
-            <img src="~/images/Logo.png" alt="施設予約システム" class="img-fluid" />
+            <!-- ロゴをクリックで TopMenu に移動 -->
+            <a asp-page="/TopMenu" id="topback">
+                <img src="~/images/Logo.png" alt="施設予約システム" class="img-fluid" />
+            </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -154,6 +157,32 @@
                         icon: ""
                     }).then(() => {
                         window.location.href = "/Identity/Account/Logout";
+                    });
+                }
+            });
+        });
+    </script>
+    <!--ZoneBokkerのロゴクリックした場合　メッセージボックスを表示する-->
+    <script>
+
+        document.getElementById("topback").addEventListener("click", function (event) {
+            event.preventDefault();
+            Swal.fire({
+                title: "この画面を離れますか？",
+                  html: "<strong>入力した情報は保存されません。</strong>",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "はい",
+                cancelButtonText: "いいえ",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire({
+
+                        icon: "success"
+                    }).then(() => {
+                        window.location.href = "/TopMenu";
                     });
                 }
             });
