@@ -45,8 +45,17 @@ namespace OIC_FK31.Pages
         public async Task<IActionResult> OnPostAsync(int? id, IFormFile? photofile)
         {
             ModelState.Remove("Facility.FacilityphotoPath");
+            ////////
+            var context = new ApplicationDbContext();
+            var facility = await context.Facility.FindAsync(id);
+            if (facility == null)
+            {
+                return NotFound();
+            }
+            Facility.FacilityphotoPath = facility.FacilityphotoPath;
+            ////////
 
-            if(photofile != null)
+            if (photofile != null)
             {
                 var extension = Path.GetExtension(photofile.FileName).ToLower();
                 if (extension != ".jpg")
@@ -63,12 +72,13 @@ namespace OIC_FK31.Pages
             {
                 return Page();
             }
-            var context = new ApplicationDbContext();
-            var facility = await context.Facility.FindAsync(id);
-            if (facility == null)
-            {
-                return NotFound();
-            }
+
+            //var context = new ApplicationDbContext();
+            //var facility = await context.Facility.FindAsync(id);
+            //if (facility == null)
+            //{
+            //    return NotFound();
+            //}
 
             if (photofile != null)
             {
