@@ -113,6 +113,19 @@ namespace WebApplication4.Pages
                 return NotFound();
             }
 
+            if (!ModelState.IsValid)
+            {
+                ModelState.AddModelError("aaa", "—\–ñî•ñ‚ª³‚µ‚­‚ ‚è‚Ü‚¹‚ñB");
+                return Page();
+            }
+
+            if (DateTime.Parse(starttime.ToString("d")) < DateTime.Parse(DateTime.Now.ToString("d")).AddDays(1))
+            {
+                ModelState.AddModelError("TimeError", "—\–ñŠÔ‚ª³‚µ‚­‚ ‚è‚Ü‚¹‚ñB—\–ñ‚Íˆê“ú‘O‚Ü‚Å‚Å‚·B");
+                return Page();
+            }
+
+            
             var context = new ApplicationDbContext();
             using(var dbcontextTransaction = context.Database.BeginTransaction(IsolationLevel.Serializable))
             {

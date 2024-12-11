@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -6,18 +8,27 @@ using static Org.BouncyCastle.Crypto.Engines.SM2Engine;
 
 namespace OIC_FK31.Pages
 {
+    [Authorize(Roles = "Admin")]
     public class FacilityEditModel : PageModel
     {
+        private readonly UserManager<IdentityUser> _userManager;
+
         private readonly IWebHostEnvironment _environment;
         [BindProperty]
         public facility Facility { get; set; }
 
-        public FacilityEditModel(IWebHostEnvironment environment)
+        public FacilityEditModel(IWebHostEnvironment environment, UserManager<IdentityUser> userManager)
         {
             _environment = environment;
+            _userManager = userManager;
         }
         public async Task<IActionResult> OnGetAsync(int? id)
         {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return Redirect("/Identity/Account/Login");
+            }
             if (id == null)
             {
                 return NotFound();
@@ -34,8 +45,17 @@ namespace OIC_FK31.Pages
         public async Task<IActionResult> OnPostAsync(int? id, IFormFile? photofile)
         {
             ModelState.Remove("Facility.FacilityphotoPath");
+            ////////
+            var context = new ApplicationDbContext();
+            var facility = await context.Facility.FindAsync(id);
+            if (facility == null)
+            {
+                return NotFound();
+            }
+            Facility.FacilityphotoPath = facility.FacilityphotoPath;
+            ////////
 
-            if(photofile != null)
+            if (photofile != null)
             {
                 var extension = Path.GetExtension(photofile.FileName).ToLower();
                 if (extension != ".jpg")
@@ -52,12 +72,13 @@ namespace OIC_FK31.Pages
             {
                 return Page();
             }
-            var context = new ApplicationDbContext();
-            var facility = await context.Facility.FindAsync(id);
-            if (facility == null)
-            {
-                return NotFound();
-            }
+
+            //var context = new ApplicationDbContext();
+            //var facility = await context.Facility.FindAsync(id);
+            //if (facility == null)
+            //{
+            //    return NotFound();
+            //}
 
             if (photofile != null)
             {

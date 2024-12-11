@@ -19,66 +19,80 @@
         <!-- ロゴをクリックで TopMenu に移動 -->
         <a asp-page="/TopMenu" id="topback">
             <img src="~/images/Logo.png" alt="施設予約システム" class="img-fluid" />
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a class="nav-link" href="/Reserve">今すぐ予約</a></li>
-                <li class="nav-item"><a class="nav-link" href="/ReservationStatus">予約状況確認</a></li>
-                <li class="nav-item"><a class="nav-link" href="/CancelReservation">予約キャンセル</a></li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        管理者の方
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="/FacilityRegistration">施設の登録と変更</a></li>
-                        <li><a class="dropdown-item" href="/UserManagement">使用者情報管理</a></li>
-                        <li><a class="dropdown-item" href="/ReportOutput">事務員用レポート出力</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a id="logoutButton" class="nav-link" href="Login.html">ログアウト</a>
-                </li>
-            </ul>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Reserve">今すぐ予約</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/ReservationStatus">予約状況確認</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/CancelReservation">予約キャンセル</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            管理者の方
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="/FacilityRegistration">施設の登録と変更</a></li>
+                            <li><a class="dropdown-item" href="/UserManagement">使用者情報管理</a></li>
+                            <li><a class="dropdown-item" href="/ReportOutput">事務員用レポート出力</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a id="logoutButton" class="nav-link" href="Login.html">ログアウト</a>
+                    </li>
+                </ul>
+            </div>
         </div>
-    </div>
-</nav>
+    </nav>
 
 
 
 <body class="bg-light">
     <h2 class="text-center my-4">予約状況</h2>
     <div class="container mt-5">
-        <button class="back-button" onclick="history.back()">← 戻る</button>
+        <a asp-page="/TopMenu">
+            <button class="back-button">← 戻る</button>
+        </a>
+        
 
 
         
-            @{
-                var context = new ApplicationDbContext();
-                var list = context.Reservation.Join(context.UserDetail, Resarvations => Resarvations.UserDetailID, userDetail => userDetail.UserDetailID, (Resarvations, userDetail) => new
-                {
-                    Resarvations.ReservationID,
-                    Resarvations.TimeID,
-                    userDetail.UserID
-                }).Join(context.Time, ReUs => ReUs.TimeID, Time => Time.TimeID, (ReUs, Time) => new
-                {
-                    ReUs.ReservationID,
-                    ReUs.UserID,
-                    Time.FacilityID,
-                    Time.StartTime,
-                    Time.EndTime,
-                }).Join(context.Facility, ReUsTi => ReUsTi.FacilityID, facility => facility.FacilityID, (ReUsTi, facility) => new
-                {
-                    ReUsTi.ReservationID,
-                    ReUsTi.UserID,
-                    ReUsTi.StartTime,
-                    ReUsTi.EndTime,
-                    facility.FacilityName,
-                    facility.FacilityphotoPath
-                }).Where(x => x.UserID == Model.LoginUserId).ToList();
-                foreach (var Situ in list)
+        @{
+            var context = new ApplicationDbContext();
+            var list = context.Reservation.Join(context.UserDetail, Resarvations => Resarvations.UserDetailID, userDetail => userDetail.UserDetailID, (Resarvations, userDetail) => new
+            {
+                Resarvations.ReservationID,
+                Resarvations.TimeID,
+                userDetail.UserID
+            }).Join(context.Time, ReUs => ReUs.TimeID, Time => Time.TimeID, (ReUs, Time) => new
+            {
+                ReUs.ReservationID,
+                ReUs.UserID,
+                Time.FacilityID,
+                Time.StartTime,
+                Time.EndTime,
+            }).Join(context.Facility, ReUsTi => ReUsTi.FacilityID, facility => facility.FacilityID, (ReUsTi, facility) => new
+            {
+                ReUsTi.ReservationID,
+                ReUsTi.UserID,
+                ReUsTi.StartTime,
+                ReUsTi.EndTime,
+                facility.FacilityName,
+                facility.FacilityphotoPath
+            }).Where(x => x.UserID == Model.LoginUserId).ToList();
+
+            if(list.Count == 0)
+            {
+                <h2 class="aaa">予約なし</h2>
+            }
+
+            foreach (var Situ in list)
                 {
                 <div class="reservation-card">
                     <div class="d-flex justify-content-center">
@@ -90,8 +104,7 @@
                         <p>@Situ.StartTime.ToString("yyyy年MM月dd日")</p>
                         <p>@Situ.StartTime.ToString("hh時mm分") ～ @Situ.EndTime.ToString("hh時mm分")</p>
                         <p class="text-muted">予約済み</p>
-                        <a asp-page="/Cancel" asp-route-id="@Situ.ReservationID" class="cancel-link">キャンセル手続きはこちら</a>
-                        <a id="cancel" asp-page="/canncel" asp-route-id="@Situ.ReservationID" class="cancel-link">キャンセル手続きはこちら</a>
+                        <a  asp-page="/Cancel" asp-route-id="@Situ.ReservationID" id="cancel"  class="cancel-link" data-url="/Cancel" data-path="@Situ.ReservationID">キャンセル手続きはこちら</a>
                     </div>
                 </div>
                 }
@@ -152,7 +165,11 @@
                 text: "",
                 icon: ""
               }).then(() => {
-                        window.location.href = "/Situation"; 
+                    const url = this.getAttribute('data-url');
+                    const urla = new URL(window.location.href);
+                        urla.pathname = url;
+                        urla.searchParams.set('id', this.getAttribute('data-path'))
+                        window.location.href = urla;    
               });
             }
           });
