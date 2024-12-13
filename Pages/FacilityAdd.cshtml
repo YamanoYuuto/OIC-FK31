@@ -28,64 +28,61 @@
     </nav>
 
     <!-- メインコンテンツ -->
-    
-        <div class="back-button mt-4">
-        <a asp-page="./FacilityIndex" class="btn btn-outline-secondary">戻る</a>
+    <div class="mt-4">
+        <a id="back-button" asp-page="./FacilityIndex" class="btn btn-outline-secondary">戻る</a>
     </div>
 
-
-        <div class="container mt-5">
+    <div class="container mt-5">
         <h1 class="text-center mb-4">施設追加</h1>
-        <form method="post" enctype="multipart/form-data" id="facilityForm">
-                    <div asp-validation-summary="All" class="text-danger "></div>
+        <form id="facilityForm" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="All" class="text-danger "></div>
 
-                   <div class="form-group">
-                        <label asp-for="FacilityAdd.FacilityName" class="form-label">施設名  ※必須</label>
-                        <input asp-for="FacilityAdd.FacilityName" class="form-control" required />
-                        <span asp-validation-for="FacilityAdd.FacilityName" class="text-danger"></span>
-                    </div>
+            <div class="form-group">
+                <label asp-for="FacilityAdd.FacilityName" class="form-label">施設名</label>
+                <input asp-for="FacilityAdd.FacilityName" class="form-control" required />
+                <span asp-validation-for="FacilityAdd.FacilityName" class="text-danger"></span>
+            </div>
 
-                   <div class="form-group">
-                        <label asp-for="FacilityAdd.FacilityAddress" class="form-label">住所  ※必須</label>
-                        <input asp-for="FacilityAdd.FacilityAddress" class="form-control" required />
-                        <span asp-validation-for="FacilityAdd.FacilityAddress" class="text-danger"></span>
-                    </div>
+            <div class="form-group">
+                <label asp-for="FacilityAdd.FacilityAddress" class="form-label">住所</label>
+                <input asp-for="FacilityAdd.FacilityAddress" class="form-control" required />
+                <span asp-validation-for="FacilityAdd.FacilityAddress" class="text-danger"></span>
+            </div>
 
-                     <div class="form-group">
-                        <label asp-for="FacilityAdd.FacilityPhone" class="form-label">電話番号  ※必須</label>
-                        <input asp-for="FacilityAdd.FacilityPhone" class="form-control" required />
-                        <span asp-validation-for="FacilityAdd.FacilityPhone" class="text-danger"></span>
-                    </div>
+            <div class="form-group">
+                <label asp-for="FacilityAdd.FacilityPhone" class="form-label">電話番号</label>
+                <input asp-for="FacilityAdd.FacilityPhone" class="form-control" required />
+                <span asp-validation-for="FacilityAdd.FacilityPhone" class="text-danger"></span>
+            </div>
 
-                    <div class="form-group">
-                        <label asp-for="FacilityAdd.OpeningTime" class="form-label">開館時間  ※必須</label>
-                        <input type="time" asp-for="FacilityAdd.OpeningTime" class="form-control" required />
-                        <span asp-validation-for="FacilityAdd.OpeningTime" class="text-danger"></span>
-                    </div>
+            <div class="form-group">
+                <label asp-for="FacilityAdd.OpeningTime" class="form-label">開館時間</label>
+                <input type="time" asp-for="FacilityAdd.OpeningTime" class="form-control" required />
+                <span asp-validation-for="FacilityAdd.OpeningTime" class="text-danger"></span>
+            </div>
 
-                    <div class="form-group">
-                        <label asp-for="FacilityAdd.ClosingTime" class="form-label">閉館時間  ※必須</label>
-                        <input type="time" asp-for="FacilityAdd.ClosingTime" class="form-control" required />
-                        <span asp-validation-for="FacilityAdd.ClosingTime" class="text-danger"></span>
-                    </div>
+            <div class="form-group">
+                <label asp-for="FacilityAdd.ClosingTime" class="form-label">閉館時間</label>
+                <input type="time" asp-for="FacilityAdd.ClosingTime" class="form-control" required />
+                <span asp-validation-for="FacilityAdd.ClosingTime" class="text-danger"></span>
+            </div>
 
-                  <div class="form-group">
-                        <label asp-for="FacilityAdd.FacilityPostCode" class="form-label">郵便番号  ※必須</label>
-                        <input asp-for="FacilityAdd.FacilityPostCode" class="form-control" required />
-                        <span asp-validation-for="FacilityAdd.FacilityPostCode" class="text-danger"></span>
-                    </div>
+            <div class="form-group">
+                <label asp-for="FacilityAdd.FacilityPostCode" class="form-label">郵便番号</label>
+                <input asp-for="FacilityAdd.FacilityPostCode" class="form-control" required />
+                <span asp-validation-for="FacilityAdd.FacilityPostCode" class="text-danger"></span>
+            </div>
 
-                     <div class="form-group">
-                        <label class="form-label">施設写真 <small class="text-muted">  ※必須  ※.jpg のみ対応</small></label>
-                        <input type="file" name="photofile" class="form-control" accept=".jpg" required/>
-                    </div>
+            <div class="form-group">
+                <label class="form-label">施設写真 <small class="text-muted">(※.jpg のみ対応)</small></label>
+                <input type="file" name="photofile" class="form-control" accept=".jpg" />
+            </div>
 
-                    <div class="d-grid">
-                        <button type="button" class="btn btn-primary" id="addButton">追加</button>
-                    </div>
-                </form>
-            
-        </div>
+            <div class="d-grid">
+                <button type="button" class="btn btn-primary" id="addButton">追加</button>
+            </div>
+        </form>
+    </div>
     
     <!-- SweetAlert2 JS -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
@@ -94,7 +91,10 @@
         document.getElementById("addButton").addEventListener("click", function (event) {
             event.preventDefault();
 
+            
             var form = document.getElementById("facilityForm");
+
+            // 入力チェック
             if (form.checkValidity()) {
                 Swal.fire({
                     title: "施設情報を追加しますか？",
@@ -111,7 +111,14 @@
                             title: "施設情報が追加されました",
                             icon: "success",
                         }).then(() => {
-                            form.submit();
+                            form.submit(); // フォームを送信
+                        });
+                    } else if (result.dismiss === Swal.DismissReason.cancel) {
+                        Swal.fire({
+                            title: "キャンセルしました",
+                            text: "施設情報の追加をキャンセルしました。",
+                            icon: "info",
+                            confirmButtonColor: "#3085d6",
                         });
                     }
                 });
@@ -123,6 +130,39 @@
                     confirmButtonColor: "#3085d6",
                 });
             }
+        });
+    </script>
+    <script>
+        document.getElementById("back-button").addEventListener("click", function (event) {
+        event.preventDefault();
+        Swal.fire({
+        title: "この画面を離れますか？",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "はい",
+        cancelButtonText: "いいえ",
+        }).then((result) => {
+        if (result.isConfirmed) {
+        Swal.fire({
+        title:"画面を離れます",
+        text: "施設一覧画面へ戻ります",
+        icon: "success"
+        }).then(() => {
+        window.location.href = "/FacilityIndex";
+        });
+        }
+        else {
+        // キャンセルされた場合、何もしない
+        Swal.fire({
+        title: "キャンセルしました",
+        text: "操作は中止されました。",
+        icon: "info",
+        confirmButtonColor: "#3085d6",
+        });
+        }
+        });
         });
     </script>
 </body>

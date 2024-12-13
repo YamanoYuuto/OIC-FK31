@@ -23,8 +23,8 @@
         </div>
     </nav>
 
-    <div class="back-button mt-4">
-        <a asp-page="./FacilityIndex" class="btn btn-outline-secondary">戻る</a>
+    <div class="mt-4">
+        <a id="back-button" asp-page="./FacilityIndex" class="btn btn-outline-secondary">戻る</a>
     </div>
 
     <div class="container mt-5">
@@ -73,6 +73,7 @@
     </div>
 
     <script>
+        //削除のダイアログ
         document.getElementById("deleteButton").addEventListener("click", function (event) {
             event.preventDefault(); // フォームの送信を防止
 
@@ -90,11 +91,55 @@
                 if (result.isConfirmed) {
                     // 確認された場合、フォームを送信
                     document.getElementById("deleteForm").submit();
+
+                    //フィードバックもらった、削除された場合のダイアログ
+                    Swal.fire({
+                        title: "削除しました",
+                        text: "削除操作が実行されました",
+                        icon: "info",
+                        confirmButtonColor: "#3085d6",
+                    });
                 } else {
                     // キャンセルされた場合、何もしない
                     Swal.fire({
                         title: "キャンセルしました",
                         text: "削除操作は中止されました。",
+                        icon: "info",
+                        confirmButtonColor: "#3085d6",
+                    });
+                }
+            });
+        });
+    </script>
+
+   
+    <script>
+        //戻るボタン押
+        document.getElementById("back-button").addEventListener("click", function (event) {
+            event.preventDefault();
+            Swal.fire({
+                title: "この画面を離れますか？",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "はい",
+                cancelButtonText: "いいえ",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire({
+                        title:"画面を離れます",
+                        text: "施設一覧画面へ戻ります",
+                        icon: "success"
+                    }).then(() => {
+                        window.location.href = "/FacilityIndex";
+                    });
+                }
+                else {
+                    // キャンセルされた場合、何もしない
+                    Swal.fire({
+                        title: "キャンセルしました",
+                        text: "操作は中止されました。",
                         icon: "info",
                         confirmButtonColor: "#3085d6",
                     });
