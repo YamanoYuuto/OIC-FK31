@@ -20,6 +20,9 @@
     <nav class="navbar">
         <img src="~/images/logo.png" alt="施設予約システム" class="img-fluid" />
     </nav>
+    <div class="back-button mt-4" style="padding: 10px 20px;">
+        <a asp-page="./TopMenu" class="btn btn-outline-secondary">戻る</a>
+    </div>
     <div class="container mt-4">
         <h1 class="fs-4 mb-4 text-center">施設一覧</h1>
 
@@ -42,8 +45,8 @@
                         <td>@Html.DisplayFor(modelItem => item.FacilityName)</td>
                         <td>@Html.DisplayFor(modelItem => item.FacilityAddress)</td>
                         <td>
-                            <a asp-page="./FacilityEdit" asp-route-id="@item.FacilityID" class="btn btn-warning btn-sm">編集</a> |
-                            <a asp-page="./FacilityDelete" asp-route-id="@item.FacilityID" class="btn btn-danger btn-sm">詳細・削除</a>
+                            <a asp-page="./FacilityEdit" asp-route-id="@item.FacilityID" class="btn btn-warning btn-sm">編集・詳細</a> |
+                            <a asp-page="./FacilityDelete" asp-route-id="@item.FacilityID" class="btn btn-danger btn-sm">削除</a>
                         </td>
                     </tr>
                 }
