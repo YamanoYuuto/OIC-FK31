@@ -7,11 +7,20 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using OIC_FK31.Data;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.ExceptionServices;
+using Microsoft.AspNetCore.Identity;
 
 namespace FK_31.Pages
 {
     public class ThankModel : PageModel
     {
+        private readonly UserManager<IdentityUser> _userManager;
+        public ThankModel(UserManager<IdentityUser> userManager)
+        {
+            _userManager = userManager;
+        }
+
+        public bool AdminFlg { get; set; } = false;
+
         public string last_name { get; set; }
         public string first_name { get; set; }
         [DataType(DataType.DateTime)]
@@ -21,6 +30,16 @@ namespace FK_31.Pages
         public string facilityname { get; set; }
         public async Task<IActionResult> OnGetAsync([FromRoute] int id)
         {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return Redirect("/Identity/Account/Login");
+            }
+            if (await _userManager.IsInRoleAsync(user, "Admin") == true)
+            {
+                AdminFlg = true;
+            }
+
             var context = new ApplicationDbContext();
             try
             {
@@ -48,10 +67,7 @@ namespace FK_31.Pages
 
                 facilityname = facility.FacilityName;
 
-                SendMailAsync(userdetail.Email, $@"ñºëO: {last_name} {first_name}
-                                                   ì˙éû: {starttime.ToString("M")}
-                                                   é{ê›ñº: {facilityname}
-                                                   éûä‘: {starttime.ToString("t")} Å` {endtime.ToString("t")}");
+                SendMailAsync(userdetail.Email, $"ñºëO: {last_name} {first_name}\n\rì˙éû: {starttime.ToString("M")}\n\ré{ê›ñº: {facilityname}\n\r éûä‘: {starttime.ToString("t")} Å` {endtime.ToString("t")}");
             }
             catch (Exception ex)
             {
@@ -82,44 +98,49 @@ namespace FK_31.Pages
 
 
 
-
-            //oauthîFèÿ
-            const string GMailAccount = "yuutoyuuto0407@gmail.com";
-
-            var clientSecrets = new ClientSecrets
+            try
             {
-                ClientId = "939600869933-samjdak9qaendeu0suu5fiv8pl3319j8.apps.googleusercontent.com",
-                ClientSecret = "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"
-            };
+                //oauthîFèÿ
+                const string GMailAccount = "yuutoyuuto0407@gmail.com";
 
-            var codeFlow = new GoogleAuthorizationCodeFlow(new GoogleAuthorizationCodeFlow.Initializer
-            {
-                DataStore = new FileDataStore("CredentialCacheFolder", false),
-                Scopes = new[] { "https://mail.google.com/" },
-                ClientSecrets = clientSecrets,
-                LoginHint = GMailAccount
-            });
+                var clientSecrets = new ClientSecrets
+                {
+                    ClientId = "939600869933-samjdak9qaendeu0suu5fiv8pl3319j8.apps.googleusercontent.com",
+                    ClientSecret = "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"
+                };
+
+                var codeFlow = new GoogleAuthorizationCodeFlow(new GoogleAuthorizationCodeFlow.Initializer
+                {
+                    DataStore = new FileDataStore("CredentialCacheFolder", false),
+                    Scopes = new[] { "https://mail.google.com/" },
+                    ClientSecrets = clientSecrets,
+                    LoginHint = GMailAccount
+                });
 
 
-            var codeReceiver = new LocalServerCodeReceiver();
-            var authCode = new AuthorizationCodeInstalledApp(codeFlow, codeReceiver);
+                var codeReceiver = new LocalServerCodeReceiver();
+                var authCode = new AuthorizationCodeInstalledApp(codeFlow, codeReceiver);
 
-            var credential = await authCode.AuthorizeAsync(GMailAccount, CancellationToken.None);
+                var credential = await authCode.AuthorizeAsync(GMailAccount, CancellationToken.None);
 
-            if (credential.Token.IsStale)
-                await credential.RefreshTokenAsync(CancellationToken.None);
+                if (credential.Token.IsStale)
+                    await credential.RefreshTokenAsync(CancellationToken.None);
 
-            var oauth2 = new SaslMechanismOAuth2(credential.UserId, credential.Token.AccessToken);
+                var oauth2 = new SaslMechanismOAuth2(credential.UserId, credential.Token.AccessToken);
 
-            using (var client = new MailKit.Net.Smtp.SmtpClient())
-            {
-                Program program = new Program();
-                await client.ConnectAsync("smtp.gmail.com", 465, SecureSocketOptions.SslOnConnect);
-                await client.AuthenticateAsync(oauth2);
-                await client.SendAsync(messsage);
-                await client.DisconnectAsync(true);
+                using (var client = new MailKit.Net.Smtp.SmtpClient())
+                {
+                    Program program = new Program();
+                    await client.ConnectAsync("smtp.gmail.com", 465, SecureSocketOptions.SslOnConnect);
+                    await client.AuthenticateAsync(oauth2);
+                    await client.SendAsync(messsage);
+                    await client.DisconnectAsync(true);
+                }
             }
+            catch (Exception ex)
+            {
 
+            }
         }
     }
 }

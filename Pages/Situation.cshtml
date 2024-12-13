@@ -13,9 +13,13 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/css/Situation.css">
 </head>
-    <nav class="navbar navbar-expand-lg">
-        <div class="container-fluid navbar-content">
+
+<nav class="navbar navbar-expand-lg">
+    <div class="container-fluid navbar-content">
+        <!-- ロゴをクリックで TopMenu に移動 -->
+        <a asp-page="/TopMenu" id="topback">
             <img src="~/images/Logo.png" alt="施設予約システム" class="img-fluid" />
+        </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -49,37 +53,47 @@
     </nav>
 
 
+
 <body class="bg-light">
     <h2 class="text-center my-4">予約状況</h2>
     <div class="container mt-5">
-        <button class="back-button" onclick="history.back()">← 戻る</button>
+        <a asp-page="/TopMenu">
+            <button class="back-button">← 戻る</button>
+        </a>
+        
 
 
         
-            @{
-                var context = new ApplicationDbContext();
-                var list = context.Reservation.Join(context.UserDetail, Resarvations => Resarvations.UserDetailID, userDetail => userDetail.UserDetailID, (Resarvations, userDetail) => new
-                {
-                    Resarvations.ReservationID,
-                    Resarvations.TimeID,
-                    userDetail.UserID
-                }).Join(context.Time, ReUs => ReUs.TimeID, Time => Time.TimeID, (ReUs, Time) => new
-                {
-                    ReUs.ReservationID,
-                    ReUs.UserID,
-                    Time.FacilityID,
-                    Time.StartTime,
-                    Time.EndTime,
-                }).Join(context.Facility, ReUsTi => ReUsTi.FacilityID, facility => facility.FacilityID, (ReUsTi, facility) => new
-                {
-                    ReUsTi.ReservationID,
-                    ReUsTi.UserID,
-                    ReUsTi.StartTime,
-                    ReUsTi.EndTime,
-                    facility.FacilityName,
-                    facility.FacilityphotoPath
-                }).ToList();
-                foreach (var Situ in list)
+        @{
+            var context = new ApplicationDbContext();
+            var list = context.Reservation.Join(context.UserDetail, Resarvations => Resarvations.UserDetailID, userDetail => userDetail.UserDetailID, (Resarvations, userDetail) => new
+            {
+                Resarvations.ReservationID,
+                Resarvations.TimeID,
+                userDetail.UserID
+            }).Join(context.Time, ReUs => ReUs.TimeID, Time => Time.TimeID, (ReUs, Time) => new
+            {
+                ReUs.ReservationID,
+                ReUs.UserID,
+                Time.FacilityID,
+                Time.StartTime,
+                Time.EndTime,
+            }).Join(context.Facility, ReUsTi => ReUsTi.FacilityID, facility => facility.FacilityID, (ReUsTi, facility) => new
+            {
+                ReUsTi.ReservationID,
+                ReUsTi.UserID,
+                ReUsTi.StartTime,
+                ReUsTi.EndTime,
+                facility.FacilityName,
+                facility.FacilityphotoPath
+            }).Where(x => x.UserID == Model.LoginUserId).ToList();
+
+            if(list.Count == 0)
+            {
+                <h2 class="aaa">予約なし</h2>
+            }
+
+            foreach (var Situ in list)
                 {
                 <div class="reservation-card">
                     <div class="d-flex justify-content-center">
@@ -88,10 +102,10 @@
                     <div>
                         <h5 class="fw-bold">@Situ.FacilityName</h5>
                         <p>大阪本部</p>
-                        <p>@Situ.StartTime.ToString("yy年MM月dd日")</p>
+                        <p>@Situ.StartTime.ToString("yyyy年MM月dd日")</p>
                         <p>@Situ.StartTime.ToString("hh時mm分") ～ @Situ.EndTime.ToString("hh時mm分")</p>
                         <p class="text-muted">予約済み</p>
-                        <a asp-page="/canncel" asp-route-id="@Situ.ReservationID" class="cancel-link">キャンセル手続きはこちら</a>
+                        <a  asp-page="/Cancel" asp-route-id="@Situ.ReservationID" id="cancel"  class="cancel-link" data-url="/Cancel" data-path="@Situ.ReservationID">キャンセル手続きはこちら</a>
                     </div>
                 </div>
                 }
@@ -133,5 +147,34 @@
                 window.history.back();
             }
         </script>
+    <script>
+        document.getElementById("cancel").addEventListener("click", function(event) {
+          event.preventDefault(); // デフォルトのリンク動作を防ぐ
+          Swal.fire({
+            title: "キャンセルしますか？",
+            text: "",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "はい",
+            cancelButtonText: "いいえ",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              Swal.fire({
+                title: "キャンセルしました",
+                text: "",
+                icon: ""
+              }).then(() => {
+                    const url = this.getAttribute('data-url');
+                    const urla = new URL(window.location.href);
+                        urla.pathname = url;
+                        urla.searchParams.set('id', this.getAttribute('data-path'))
+                        window.location.href = urla;    
+              });
+            }
+          });
+        });
+    </script>
     </body>
 </html>

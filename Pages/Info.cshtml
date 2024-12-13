@@ -15,25 +15,30 @@
 <body>
     <nav class="navbar navbar-expand-lg">
         <div class="container-fluid navbar-content">
-            <img src="~/images/Logo.png" alt="施設予約システム" class="img-fluid" />
+            <!-- ロゴをクリックで TopMenu に移動 -->
+            <a asp-page="/TopMenu"id="topback">
+                <img src="~/images/Logo.png" alt="施設予約システム" class="img-fluid" />
+            </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="/Reserve">今すぐ予約</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/ReservationStatus">予約状況確認</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/CancelReservation">予約キャンセル</a></li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            管理者の方
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="/FacilityRegistration">施設の登録と変更</a></li>
-                            <li><a class="dropdown-item" href="/UserManagement">使用者情報管理</a></li>
-                            <li><a class="dropdown-item" href="/ReportOutput">事務員用レポート出力</a></li>
-                        </ul>
-                    </li>
+                    <li class="nav-item"><a class="nav-link" href="/Facilities">今すぐ予約</a></li>
+                    <li class="nav-item"><a class="nav-link" href="//Situation">予約状況確認</a></li>
+                    @if (Model.AdminFlg)
+                    {
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                管理者の方
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="/FacilityIndex">施設の登録と変更</a></li>
+                                <li><a class="dropdown-item" href="/UserManagement">使用者情報管理</a></li>
+                                <li><a class="dropdown-item" href="/ReportOutput">事務員用レポート出力</a></li>
+                            </ul>
+                        </li>
+                    }
                     <li class="nav-item">
                         <a id="logoutButton" class="nav-link" href="Login.html">ログアウト</a>
                     </li>
@@ -102,7 +107,7 @@
             </div>
 
             <div class="row g-3 mb-3">
-                <div class="col-md-8">
+                <div class="mb-3">
                     <label asp-for="Input.postal_code" class="form-label">郵便番号</label>
                     <input asp-for="Input.postal_code" type="text" class=" form-control p-postal-code" id="postal_code" name="postal_code" size="8" maxlength="8" 　required>
                     <span asp-validation-for="Input.postal_code" class="text-danger"></span>
@@ -215,6 +220,32 @@
                         icon: "success"
                     }).then(() => {
                         window.location.href = "/Identity/Account/Logout";
+                    });
+                }
+            });
+        });
+    </script>
+    <!--ZoneBokkerのロゴクリックした場合　メッセージボックスを表示する-->
+    <script>
+
+        document.getElementById("topback").addEventListener("click", function (event) {
+            event.preventDefault();
+            Swal.fire({
+                title: "この画面を離れますか？",
+                  html: "<strong>入力した情報は保存されません。</strong>",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "はい",
+                cancelButtonText: "いいえ",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire({
+                      
+                        icon: "success"
+                    }).then(() => {
+                        window.location.href = "/TopMenu";
                     });
                 }
             });

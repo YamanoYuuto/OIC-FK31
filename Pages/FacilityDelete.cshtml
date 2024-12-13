@@ -1,0 +1,106 @@
+﻿@page
+@model OIC_FK31.Pages.FacilityDeleteModel
+@{
+}
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/FacilityEdit.css" /> <!-- 外部CSSファイルのリンク -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid navbar-content">
+            <img src="~/images/Logo.png" alt="施設予約システム" class="img-fluid" />
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+    </nav>
+
+    <div class="back-button mt-4">
+        <a asp-page="./FacilityIndex" class="btn btn-outline-secondary">戻る</a>
+    </div>
+
+    <div class="container mt-5">
+        <h1 class="my-4">施設削除</h1>
+        <form method="post" id="deleteForm">
+            <div class="form-group">
+                <label class="control-label">施設名</label>
+                <p>@Html.DisplayFor(model => model.Facilities.FacilityName)</p>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">住所</label>
+                <p>@Html.DisplayFor(model => model.Facilities.FacilityAddress)</p>
+            </div>
+
+            <div class="form-group">
+
+                <label class="control-label">電話番号</label>
+                <p>@Html.DisplayFor(model => model.Facilities.FacilityPhone)</p>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">開館時間</label>
+                <p>@Model.Facilities.OpeningTime.ToString("t")</p>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">閉館時間</label>
+                <p>@Model.Facilities.ClosingTime.ToString("t")</p>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">郵便番号</label>
+                <p>@Html.DisplayFor(model => model.Facilities.FacilityPostCode)</p>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">施設写真</label>
+                <img src="/images/@Model.Facilities.FacilityphotoPath" alt="施設画像" class="img-fluid">
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="削除" class="submit-button btn btn-danger" id="deleteButton" />
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById("deleteButton").addEventListener("click", function (event) {
+            event.preventDefault(); // フォームの送信を防止
+
+            // SweetAlert2 確認ダイアログの表示
+            Swal.fire({
+                title: "削除してもよろしいですか？",
+                text: "この操作は元に戻せません。",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#3085d6",
+                confirmButtonText: "はい、削除します",
+                cancelButtonText: "キャンセル",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // 確認された場合、フォームを送信
+                    document.getElementById("deleteForm").submit();
+                } else {
+                    // キャンセルされた場合、何もしない
+                    Swal.fire({
+                        title: "キャンセルしました",
+                        text: "削除操作は中止されました。",
+                        icon: "info",
+                        confirmButtonColor: "#3085d6",
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

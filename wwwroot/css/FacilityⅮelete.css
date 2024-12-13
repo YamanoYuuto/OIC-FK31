@@ -1,0 +1,199 @@
+﻿/* ナビゲーションバー */
+.navbar {
+    background-color: #e6ffd6;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center; /* 中央揃え */
+    padding: 10px;
+    flex-wrap: wrap; /* 小さい画面で折り返し */
+}
+/* 施設情報を囲むボックス */
+.info-box {
+    background-color: #ffffff; /* 背景色を白に設定 */
+    border: 1px solid #ced4da; /* 薄い灰色の境界線 */
+    border-radius: 5px; /* 角を丸く */
+    padding: 10px; /* 内側の余白 */
+    margin-top: 5px; /* 上部の余白 */
+}
+
+/* フォーム画像 */
+.img-fluid {
+    width: 30vh; /* 幅を小さく設定 */
+    height: auto; /* アスペクト比を維持 */
+}
+
+/* システム名のスタイル */
+.system-name {
+    font-size: 18px;
+    margin-right: auto; /* 左寄せ */
+}
+
+.system-name-en {
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+/* コンテナ全体のスタイル */
+.container {
+    max-width: 600px;
+    margin: 0 auto; /* 水平方向の中央揃え */
+    padding: 20px;
+    background-color: #f7c98a;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 軽い影 */
+}
+
+/* ボタンスタイル */
+.submit-button, .back-button {
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    position: center;
+}
+
+.submit-button {
+    background-color: #000;
+    color: #fff;
+    border: none;
+}
+
+    .submit-button:hover {
+        background-color: #444;
+    }
+
+.back-button {
+    color: #333;
+}
+
+    .back-button:hover {
+        background-color: #f0f0f0;
+    }
+
+/* 背景と全体スタイル */
+body {
+    background-color: #f4f4f4;
+}
+
+/* 見出しスタイル */
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #333;
+    padding-bottom: 10px;
+}
+
+/* フォーム要素 */
+form .form-group {
+    margin-bottom: 15px;
+}
+
+form .form-control {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+}
+
+/* コンテナのレイアウト */
+.photo-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+/* ファイル入力部分 */
+.file-input {
+    flex: 1;
+}
+
+    .file-input label {
+        display: block;
+        margin-bottom: 10px;
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+/* 画像プレビュー部分 */
+.photo-preview {
+    flex: 1;
+    text-align: center;
+}
+
+    .photo-preview img {
+        max-width: 100%;
+        height: auto;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+/* スマホ対応 */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .system-name {
+        font-size: 16px;
+    }
+
+    .system-name-en {
+        font-size: 20px;
+    }
+
+    .container {
+        max-width: 100%;
+        padding: 15px;
+    }
+
+    .photo-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .photo-preview {
+        text-align: left;
+    }
+
+    .submit-button, .back-button {
+        font-size: 16px;
+        padding: 10px;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar {
+        align-items: center;
+        padding: 5px;
+    }
+
+    .system-name {
+        font-size: 14px;
+    }
+
+    .system-name-en {
+        font-size: 18px;
+    }
+
+    .container {
+        max-width: 85%;
+        padding: 10px;
+    }
+
+    .submit-button, .back-button {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    h1 {
+        font-size: 20px;
+    }
+}

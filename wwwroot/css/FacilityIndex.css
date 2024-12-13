@@ -1,0 +1,83 @@
+﻿.navbar {
+    background-color: #e6ffd6;
+    display: flex;
+    justify-content: flex-start; /* 左寄せ */
+    align-items: flex-start; /* 上寄せ */
+    padding: 10px; /* 必要に応じてパディングを調整 */
+}
+
+.img-fluid {
+    width: 30vh; /* 画像の幅を小さく設定 */
+    height: auto; /* アスペクト比を維持 */
+}
+
+
+
+
+/* テーブルのスタイル */
+.table th {
+    background-color: #ddfaff; /* ヘッダーの背景色 */
+    color: #495057; /* ヘッダーの文字色 */
+}
+
+.table td {
+    vertical-align: middle; /* セルの垂直位置を中央揃え */
+}
+
+    .table td a {
+        text-decoration: none; /* リンクの下線を削除 */
+        color: inherit; /* リンクの文字色を親から継承 */
+    }
+
+/* 施設作成ボタンのカスタマイズ */
+.btn-primary {
+    background-color: #007bff; /* ボタンの背景色 */
+    border-color: #007bff; /* ボタンの境界線色 */
+}
+
+    .btn-primary:hover {
+        background-color: #0056b3; /* ホバー時の背景色 */
+        border-color: #004085; /* ホバー時の境界線色 */
+    }
+
+/* 操作ボタンのカスタマイズ */
+.btn-warning {
+    background-color: #ffc107; /* 編集ボタンの背景色 */
+    border-color: #ffc107; /* 編集ボタンの境界線色 */
+}
+
+    .btn-warning:hover {
+        background-color: #e0a800; /* 編集ボタンホバー時の背景色 */
+        border-color: #d39e00; /* 編集ボタンホバー時の境界線色 */
+    }
+
+.btn-danger {
+    background-color: #dc3545; /* 削除ボタンの背景色 */
+    border-color: #dc3545; /* 削除ボタンの境界線色 */
+}
+
+    .btn-danger:hover {
+        background-color: #c82333; /* 削除ボタンホバー時の背景色 */
+        border-color: #bd2130; /* 削除ボタンホバー時の境界線色 */
+    }
+
+/* フッター */
+footer {
+    text-align: center;
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #f8f9fa;
+    color: #6c757d;
+}
+
+/* リストのボタン間の間隔 */
+.table td a {
+    margin: 0 5px;
+}
+
+/* モバイル対応 - 小さなスクリーンでのスタイル */
+@media (max-width: 768px) {
+    .table {
+        font-size: 14px; /* モバイルでのフォントサイズを小さく */
+    }
+}

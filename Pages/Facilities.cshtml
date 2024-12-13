@@ -18,7 +18,10 @@
 <body>
     <nav class="navbar navbar-expand-lg">
         <div class="container-fluid navbar-content">
-            <img src="~/images/Logo.png" alt="施設予約システム" class="img-fluid" />
+            <!-- ロゴをクリックで TopMenu に移動 -->
+            <a asp-page="/TopMenu" id="topback">
+                <img src="~/images/Logo.png" alt="施設予約システム" class="img-fluid" />
+            </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -28,21 +31,21 @@
                         <a class="nav-link" href="/Facilities">今すぐ予約</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/ReservationStatus">予約状況確認</a>
+                        <a class="nav-link" href="/Situation">予約状況確認</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/CancelReservation">予約キャンセル</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            管理者の方
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="/FacilityRegistration">施設の登録と変更</a></li>
-                            <li><a class="dropdown-item" href="/UserManagement">使用者情報管理</a></li>
-                            <li><a class="dropdown-item" href="/ReportOutput">事務員用レポート出力</a></li>
-                        </ul>
-                    </li>
+                    @if (Model.AdminFlg)
+                    {
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                管理者の方
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="/FacilityIndex">施設の登録と変更</a></li>
+                                <li><a class="dropdown-item" href="/UserManagement">使用者情報管理</a></li>
+                                <li><a class="dropdown-item" href="/ReportOutput">事務員用レポート出力</a></li>
+                            </ul>
+                        </li>
+                    }
                     <li class="nav-item">
                         <a id="logoutButton" class="nav-link" href="Login.html">ログアウト</a>
                     </li>
@@ -51,7 +54,11 @@
         </div>
     </nav>
 
+
     <style>
+        .container {
+            position: center;
+        }
         .header {
             background-color: #ccff99;
             padding: 10px;
@@ -136,18 +143,10 @@
         <div class="search-bar text-center">
             <div class="row g-2 justify-content-center">
                 <div class="col-md-3">
-                    <input type="text" class="form-control" placeholder="施設名">
+                    <input id="searchtext" type="text" class="form-control" placeholder="施設名">
                 </div>
                 <div class="col-md-3">
-                    <select class="form-select">
-                        <option selected>ジャンル</option>
-                        <option>会議室</option>
-                        <option>コワーキングスペース</option>
-                        <option>フリースペース</option>
-                    </select>
-                </div>
-                <div class="col-md-3">
-                    <select class="form-select">
+                    <select id="searchaddress" class="form-select">
                         <option selected>所在地</option>
                         <option>東京</option>
                         <option>大阪</option>
@@ -155,10 +154,11 @@
                     </select>
                 </div>
                 <div class="col-md-1">
-                    <button class="btn btn-primary">検索</button>
+                    <button id="search" class="btn btn-primary">検索</button>
                 </div>
             </div>
         </div>
+    </div>
 
         <!-- 1つ目 -->
         <div class="card-grid">
@@ -202,7 +202,7 @@
             @* <div class="card">
                 <img src="/images/sisukai.jpg" alt="施設画像">
                 <div class="card-body">
-                    <h5 class="card-title">大阪情報コンピュータ専門学校</h5>
+                    <h5 class="card-title">長居公園</h5>
 
                     <!-- 定義リストを使用して情報をグループ化 -->
                     <dl class="row">
@@ -213,13 +213,13 @@
                         <dd class="col-sm-8 facility-bunsyo">12月31日から1月5日まで</dd>
 
                         <dt class="col-sm-4 facility-label">住所</dt>
-                        <dd class="col-sm-8 facility-bunsyo">大阪府大阪市天王寺区上本町 6-8-4</dd>
+                        <dd class="col-sm-8 facility-bunsyo">大阪府大阪市東住吉区長居公園1-1</dd>
                     </dl>
 
                     <!-- 日時選択ボタン -->
                     <div class="d-flex justify-content-center mt-3">
                         <!--ボタンの情報-->
-                        <a href="/DateSelection" class="date-selection-button" data-url="/Calendar" data-facility-name="麻布台ヒルズ" style="background-color: #5bc0de; border-color: #46b8da">日時選択</a>
+                        <a href="/DateSelection" class="date-selection-button" data-url="/Calendar" data-facility-name="長居公園" style="background-color: #5bc0de; border-color: #46b8da">日時選択</a>
 
                     </div>
 
@@ -230,6 +230,21 @@
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        //検索するスクリプト
+        document.getElementById('search').addEventListener("click", function (event) {
+            const url = new URL(window.location.href);
+            url.searchParams.delete('searchaddress')
+            url.searchParams.delete('searchtext')
+            if (document.getElementById('searchtext').value != ''){
+                url.searchParams.set('searchtext', document.getElementById('searchtext').value)
+            }
+            if (document.getElementById('searchaddress').value != '所在地'){
+                url.searchParams.set('searchaddress', document.getElementById('searchaddress').value)
+            }
+            window.location.href = url;
+        });
+    </script>
     <script>
         document.getElementById('logoutButton').addEventListener("click", function (event) {
             event.preventDefault(); // デフォルトのリンク動作を防ぐ
@@ -302,6 +317,8 @@
                 if (url) {
                         const urla = new URL(window.location.href);
                         urla.pathname = url;
+                        urla.searchParams.delete('searchaddress')
+                        urla.searchParams.delete('searchtext')
                         urla.searchParams.set('id', this.getAttribute('data-path'))
                         window.location.href = urla;
                 } else {
