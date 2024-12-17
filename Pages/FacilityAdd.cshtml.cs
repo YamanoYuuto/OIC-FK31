@@ -64,9 +64,8 @@ namespace OIC_FK31.Pages
                 FacilityAdd.FacilityphotoPath = photofile.FileName;
                 var uploadsFolder = Path.Combine(_environment.WebRootPath, "images");
                 var filepath = Path.Combine(uploadsFolder, photofile.FileName);
-                IFileProvider provider = new PhysicalFileProvider(uploadsFolder);
-                IFileInfo fileinfo = provider.GetFileInfo(photofile.FileName);
-                if (fileinfo.Exists == true)
+                
+                if (System.IO.File.Exists(filepath))
                 {
                     ModelState.AddModelError("FileExistsTrue", "ファイル名が重複しています。");
                     return Page();
@@ -75,11 +74,6 @@ namespace OIC_FK31.Pages
                 var stream = new FileStream(filepath, FileMode.Create);
                 await photofile.CopyToAsync(stream);
                 
-
-
-
-
-
 
 
                 //FacilityAdd.FacilityphotoPath = photofile.FileName;
