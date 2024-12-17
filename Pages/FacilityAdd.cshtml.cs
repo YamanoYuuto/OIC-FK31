@@ -8,6 +8,7 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.FileProviders;
 
 namespace OIC_FK31.Pages
 {
@@ -63,8 +64,29 @@ namespace OIC_FK31.Pages
                 FacilityAdd.FacilityphotoPath = photofile.FileName;
                 var uploadsFolder = Path.Combine(_environment.WebRootPath, "images");
                 var filepath = Path.Combine(uploadsFolder, photofile.FileName);
+                IFileProvider provider = new PhysicalFileProvider(uploadsFolder);
+                IFileInfo fileinfo = provider.GetFileInfo(photofile.FileName);
+                if (fileinfo.Exists == true)
+                {
+                    ModelState.AddModelError("FileExistsTrue", "ファイル名が重複しています。");
+                    return Page();
+                }
+
                 var stream = new FileStream(filepath, FileMode.Create);
                 await photofile.CopyToAsync(stream);
+                
+
+
+
+
+
+
+
+                //FacilityAdd.FacilityphotoPath = photofile.FileName;
+                //var uploadsFolder = Path.Combine(_environment.WebRootPath, "images");
+                //var filepath = Path.Combine(uploadsFolder, photofile.FileName);
+                //var stream = new FileStream(filepath, FileMode.Create);
+                //await photofile.CopyToAsync(stream);
             }
             
             var context =new ApplicationDbContext();
