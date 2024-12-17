@@ -154,9 +154,18 @@
                     Swal.fire({
                         title: "ログアウトしました",
                         text: "",
-                        icon: ""
+                        icon: "success"
                     }).then(() => {
                         window.location.href = "/Identity/Account/Logout";
+                    });
+                }
+                else {
+                    // キャンセルされた場合、何もしない
+                    Swal.fire({
+                        title: "キャンセルしました",
+                        text: "操作は中止されました。",
+                        icon: "info",
+                        confirmButtonColor: "#3085d6",
                     });
                 }
             });
@@ -179,13 +188,25 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     Swal.fire({
-
+                        title: "画面を離れます",
+                        text: "メニュー画面へ戻ります",
                         icon: "success"
                     }).then(() => {
                         window.location.href = "/TopMenu";
                     });
                 }
+                else {
+                    // キャンセルされた場合、何もしない
+                    Swal.fire({
+                        title: "キャンセルしました",
+                        text: "操作は中止されました。",
+                        icon: "info",
+                        confirmButtonColor: "#3085d6",
+                    });
+                }
             });
+          
+           
         });
     </script>
 </body>
