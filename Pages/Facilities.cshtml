@@ -262,9 +262,18 @@
                     Swal.fire({
                         title: "ログアウトしました",
                         text: "",
-                        icon: ""
+                        icon: "success"
                     }).then(() => {
                         window.location.href = "/Identity/Account/Logout";
+                    });
+                }
+                else {
+                    // キャンセルされた場合、何もしない
+                    Swal.fire({
+                        title: "キャンセルしました",
+                        text: "操作は中止されました。",
+                        icon: "info",
+                        confirmButtonColor: "#3085d6",
                     });
                 }
             });
