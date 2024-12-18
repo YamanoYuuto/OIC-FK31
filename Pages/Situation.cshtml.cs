@@ -21,6 +21,8 @@ namespace OIC_FK31.Pages
         {
             _userManager = userManager;
         }
+        public bool AdminFlg { get; set; } = false;
+
         public async Task<IActionResult> OnGetAsync()
         {
             var user = await _userManager.GetUserAsync(User);
@@ -28,6 +30,11 @@ namespace OIC_FK31.Pages
             {
                 return Redirect("/Identity/Account/Login");
             }
+            if (await _userManager.IsInRoleAsync(user, "Admin") == true)
+            {
+                AdminFlg = true;
+            }
+
             LoginUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             return Page();
             //var context = new ApplicationDbContext();

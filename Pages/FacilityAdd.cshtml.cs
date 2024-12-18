@@ -5,20 +5,38 @@ using OIC_FK31.Data;
 using System.Security.Claims;
 using System.IO;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.FileProviders;
 
 namespace OIC_FK31.Pages
 {
+    [Authorize(Roles = "Admin")]
     public class FacilityAddModel : PageModel
     {
+        private readonly UserManager<IdentityUser> _userManager;
 
         private readonly IWebHostEnvironment _environment;
         [BindProperty]
         public facility FacilityAdd { get; set; }
 
-        public FacilityAddModel(IWebHostEnvironment environment)
+        public FacilityAddModel(IWebHostEnvironment environment, UserManager<IdentityUser> userManager)
         {
             _environment = environment;
+            _userManager = userManager;
         }
+
+        public async Task<IActionResult> OnGetAsync()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return Redirect("/Identity/Account/Login");
+            }
+            return Page();
+        }
+
         public async Task<IActionResult> OnPostAsync([Required(ErrorMessage ="ファイルが選択されていません")]IFormFile photofile)
         {
             ModelState.Remove("FacilityAdd.FacilityphotoPath");
@@ -46,8 +64,23 @@ namespace OIC_FK31.Pages
                 FacilityAdd.FacilityphotoPath = photofile.FileName;
                 var uploadsFolder = Path.Combine(_environment.WebRootPath, "images");
                 var filepath = Path.Combine(uploadsFolder, photofile.FileName);
+                
+                if (System.IO.File.Exists(filepath))
+                {
+                    ModelState.AddModelError("FileExistsTrue", "ファイル名が重複しています。");
+                    return Page();
+                }
+
                 var stream = new FileStream(filepath, FileMode.Create);
                 await photofile.CopyToAsync(stream);
+                
+
+
+                //FacilityAdd.FacilityphotoPath = photofile.FileName;
+                //var uploadsFolder = Path.Combine(_environment.WebRootPath, "images");
+                //var filepath = Path.Combine(uploadsFolder, photofile.FileName);
+                //var stream = new FileStream(filepath, FileMode.Create);
+                //await photofile.CopyToAsync(stream);
             }
             
             var context =new ApplicationDbContext();
