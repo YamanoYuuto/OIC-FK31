@@ -34,48 +34,48 @@
 
     <div class="container mt-5">
         <h1 class="text-center mb-4">施設追加</h1>
-                <form  method="post" enctype="multipart/form-data">
+        <form method="post" enctype="multipart/form-data" id="facilityForm">
                     <div asp-validation-summary="All" class="text-danger "></div>
 
                    <div class="form-group">
-                        <label asp-for="FacilityAdd.FacilityName" class="form-label">施設名</label>
+                        <label asp-for="FacilityAdd.FacilityName" class="form-label">施設名  ※必須</label>
                         <input asp-for="FacilityAdd.FacilityName" class="form-control" required />
                         <span asp-validation-for="FacilityAdd.FacilityName" class="text-danger"></span>
                     </div>
 
                    <div class="form-group">
-                        <label asp-for="FacilityAdd.FacilityAddress" class="form-label">住所</label>
+                        <label asp-for="FacilityAdd.FacilityAddress" class="form-label">住所  ※必須</label>
                         <input asp-for="FacilityAdd.FacilityAddress" class="form-control" required />
                         <span asp-validation-for="FacilityAdd.FacilityAddress" class="text-danger"></span>
                     </div>
 
                      <div class="form-group">
-                        <label asp-for="FacilityAdd.FacilityPhone" class="form-label">電話番号</label>
+                        <label asp-for="FacilityAdd.FacilityPhone" class="form-label">電話番号  ※必須</label>
                         <input asp-for="FacilityAdd.FacilityPhone" class="form-control" required />
                         <span asp-validation-for="FacilityAdd.FacilityPhone" class="text-danger"></span>
                     </div>
 
                     <div class="form-group">
-                        <label asp-for="FacilityAdd.OpeningTime" class="form-label">開館時間</label>
+                        <label asp-for="FacilityAdd.OpeningTime" class="form-label">開館時間  ※必須</label>
                         <input type="time" asp-for="FacilityAdd.OpeningTime" class="form-control" required />
                         <span asp-validation-for="FacilityAdd.OpeningTime" class="text-danger"></span>
                     </div>
 
                     <div class="form-group">
-                        <label asp-for="FacilityAdd.ClosingTime" class="form-label">閉館時間</label>
+                        <label asp-for="FacilityAdd.ClosingTime" class="form-label">閉館時間  ※必須</label>
                         <input type="time" asp-for="FacilityAdd.ClosingTime" class="form-control" required />
                         <span asp-validation-for="FacilityAdd.ClosingTime" class="text-danger"></span>
                     </div>
 
                   <div class="form-group">
-                        <label asp-for="FacilityAdd.FacilityPostCode" class="form-label">郵便番号</label>
+                        <label asp-for="FacilityAdd.FacilityPostCode" class="form-label">郵便番号  ※必須</label>
                         <input asp-for="FacilityAdd.FacilityPostCode" class="form-control" required />
                         <span asp-validation-for="FacilityAdd.FacilityPostCode" class="text-danger"></span>
                     </div>
 
                      <div class="form-group">
-                        <label class="form-label">施設写真 <small class="text-muted">(※.jpg のみ対応)</small></label>
-                        <input type="file" name="photofile" class="form-control" accept=".jpg" />
+                        <label class="form-label">施設写真 <small class="text-muted">  ※必須  ※.jpg のみ対応</small></label>
+                        <input type="file" name="photofile" class="form-control" accept=".jpg" required/>
                     </div>
 
             <div class="d-grid">

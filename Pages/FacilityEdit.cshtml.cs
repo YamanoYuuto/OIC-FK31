@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 using OIC_FK31.Data;
 using static Org.BouncyCastle.Crypto.Engines.SM2Engine;
 
@@ -63,6 +64,7 @@ namespace OIC_FK31.Pages
                     ModelState.AddModelError("FileEx", "ファイルは.jpgのみです。");
                 }
             }
+
             if (Facility.OpeningTime > Facility.ClosingTime)
             {
                 ModelState.AddModelError("TimeError", "開館・閉館時間を正しく入力してください");
@@ -85,6 +87,12 @@ namespace OIC_FK31.Pages
                 Facility.FacilityphotoPath = photofile.FileName;
                 var uploadsFolder = Path.Combine(_environment.WebRootPath, "images");
                 var filepath = Path.Combine(uploadsFolder, photofile.FileName);
+                if (System.IO.File.Exists(filepath))
+                {
+                    ModelState.AddModelError("FileExistsTrue", "ファイル名が重複しています。");
+                    return Page();
+                }
+
                 var stream = new FileStream(filepath, FileMode.Create);
                 await photofile.CopyToAsync(stream);
                 facility.FacilityphotoPath = photofile.FileName;
