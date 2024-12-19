@@ -162,6 +162,12 @@
 
         <!-- 1つ目 -->
         <div class="card-grid">
+        @if(Model.Facilities.Count() == 0)
+        {
+            <p style=" position: center;">
+                <h2>該当する施設がありません。</h2>
+            </p>
+        }
         @foreach(var item in Model.Facilities)
         {
                 <div class="card">
