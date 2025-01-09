@@ -1,6 +1,9 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using OIC_FK31.Data;
+using Org.BouncyCastle.Asn1.Cms;
+using System.ComponentModel.DataAnnotations;
 
 namespace OIC_FK31.Pages
 {
@@ -14,7 +17,9 @@ namespace OIC_FK31.Pages
 
         public bool AdminFlg { get; set; } = false;
 
-        public async Task<IActionResult> OnGetAsync()
+        public IList<time> time { get; set; } 
+
+        public async Task<IActionResult> OnGetAsync([FromQuery][Required] string id)
         {
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
@@ -25,6 +30,15 @@ namespace OIC_FK31.Pages
             {
                 AdminFlg = true;
             }
+
+            
+            var context = new ApplicationDbContext();
+            int iid = int.Parse(id);
+            time = context.Time.Where(x => x.FacilityID == iid).ToList();
+
+            //‰ß‹Ž‚Ìƒf[ƒ^‚ðŒŸõ‚µ‚È‚¢‚æ‚¤‚É
+            //time = context.Time.Where(x => x.FacilityID == iid).Where(x => x.StartTime.Date > DateTime.Now.Date).ToList();
+
             return Page();
         }
     }
