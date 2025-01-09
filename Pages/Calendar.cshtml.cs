@@ -31,9 +31,13 @@ namespace OIC_FK31.Pages
                 AdminFlg = true;
             }
 
+            
             var context = new ApplicationDbContext();
             int iid = int.Parse(id);
             time = context.Time.Where(x => x.FacilityID == iid).ToList();
+
+            //‰ß‹Ž‚Ìƒf[ƒ^‚ðŒŸõ‚µ‚È‚¢‚æ‚¤‚É
+            //time = context.Time.Where(x => x.FacilityID == iid).Where(x => x.StartTime.Date > DateTime.Now.Date).ToList();
 
             return Page();
         }
