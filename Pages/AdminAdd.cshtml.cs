@@ -69,7 +69,7 @@ namespace OIC_FK31.Pages
             [Required(ErrorMessage = "メールアドレスを入力してください。")]
             [EmailAddress]
             [Display(Name = "Email")]
-            public string Email { get; set; } = "Admin@zone.com";
+            public string Email { get; set; } = "Admin@example.com";
 
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
