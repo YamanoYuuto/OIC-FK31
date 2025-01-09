@@ -157,33 +157,36 @@
             }
         </script>
     <script>
-        document.getElementById("cancel").addEventListener("click", function(event) {
-          event.preventDefault(); // デフォルトのリンク動作を防ぐ
-          Swal.fire({
-            title: "キャンセルしますか？",
-            text: "",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "はい",
-            cancelButtonText: "いいえ",
-          }).then((result) => {
-            if (result.isConfirmed) {
-              Swal.fire({
-                title: "キャンセルしました",
-                text: "",
-                icon: ""
-              }).then(() => {
-                    const url = this.getAttribute('data-url');
-                    const urla = new URL(window.location.href);
-                        urla.pathname = url;
-                        urla.searchParams.set('id', this.getAttribute('data-path'))
-                        window.location.href = urla;    
-              });
-            }
-          });
+        document.querySelectorAll(".cancel-link").forEach(function (element) {
+            element.addEventListener("click", function (event) {
+                event.preventDefault(); // Prevent default link behavior
+                Swal.fire({
+                    title: "キャンセルしますか？",
+                    text: "",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "はい",
+                    cancelButtonText: "いいえ",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Swal.fire({
+                            title: "キャンセルしました",
+                            text: "",
+                            icon: ""
+                        }).then(() => {
+                            const url = this.getAttribute('data-url');
+                            const urla = new URL(window.location.href);
+                            urla.pathname = url;
+                            urla.searchParams.set('id', this.getAttribute('data-path'));
+                            window.location.href = urla;
+                        });
+                    }
+                });
+            });
         });
+
     </script>
     </body>
 </html>
