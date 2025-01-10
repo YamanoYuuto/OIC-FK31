@@ -10,7 +10,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>施設予約システム - Thank you</title>
+    <title>施設予約システム-時間選択</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet">
@@ -101,6 +101,9 @@
         document.addEventListener('DOMContentLoaded', function () {
             var calendarEl = document.getElementById('calendar');
 
+            var today = new Date();
+            today.setHours(0, 0, 0, 0);
+
             // 予約済みの時間をDateオブジェクトの配列に変換
             var reservedEvents = reservedTimes.map(reserved => ({
                 start: new Date(reserved.startTime),
@@ -145,6 +148,9 @@
                 },
                 selectable: true,
                 selectAllow: function (selectInfo) {
+                    if (selectInfo.start < today || selectInfo.start.getDate() === today.getDate()) {
+                        return false; // 選択を拒否
+                    }
                     // 選択範囲と予約済み範囲が重なるかチェック
                     for (let event of reservedEvents) {
                         if (
