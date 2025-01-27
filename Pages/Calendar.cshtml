@@ -149,33 +149,22 @@
                 },
                 selectable: true,
                 selectAllow: function (selectInfo) {
-                    if (selectInfo.start < today || selectInfo.start.getDate() === today.getDate()) {
-                            Swal.fire({
-                                title: '選択できません',
-                                text: '本日または過去の日付は選択できません。',
-                                icon: 'warning',
-                                confirmButtonColor: '#3085d6',
-                                confirmButtonText: 'OK'
-                            }).then((result) => {
-                                if (result.isConfirmed) {
-                                    calendar.changeView('dayGridMonth', info.dateStr);
+                                if (selectInfo.start < today || selectInfo.start.getDate() === today.getDate()) {
+                                        Swal.fire({
+                                            title: '選択できません',
+                                            text: '本日または過去の日付は選択できません。',
+                                            icon: 'warning',
+                                            confirmButtonColor: '#3085d6',
+                                            confirmButtonText: 'OK'
+                                        });
+                                        return false;
                                 }
-                            });
-                        return false;
-                    }
                     // 選択範囲と予約済み範囲が重なるかチェック
                     for (let event of reservedEvents) {
                         if (
                             selectInfo.start < event.end &&
                             selectInfo.end > event.start
                         ) {
-                            Swal.fire({
-                                title: '選択できません',
-                                text: '本日または過去の日付は選択できません。',
-                                icon: 'warning',
-                                confirmButtonColor: '#3085d6',
-                                confirmButtonText: 'OK'
-                            });
                             return false;
                         }
                     }
