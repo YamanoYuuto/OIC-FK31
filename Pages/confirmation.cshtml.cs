@@ -132,8 +132,8 @@ namespace WebApplication4.Pages
                 try
                 {
                     bool timeflg = false;
-                    var day = DateTime.Parse(starttime.ToString("t"));
-                    var times = context.Time.Where(x => x.FacilityID == facilityid && x.StartTime == day).ToList();
+                    var day = DateTime.Parse(starttime.ToString("d"));
+                    var times = context.Time.Where(x => x.FacilityID == facilityid && day <= x.StartTime && x.StartTime <= day.AddDays(1)).ToList();
                     foreach (var i in times)
                     {
                         if (i.StartTime >= endtime || i.EndTime <= starttime)
@@ -196,72 +196,11 @@ namespace WebApplication4.Pages
                 catch
                 {
                     ModelState.AddModelError("error", "エラーが起きました。");
+                    dbcontextTransaction.Rollback();
                     return Page();
                 }
-            }
-            //bool timeflg = false;
-            //var day = DateTime.Parse(starttime.ToString("t"));
-            //var times = context.Time.Where(x => x.FacilityID == facilityid && x.StartTime == day).ToList();
-            //foreach (var i in times)
-            //{
-            //    if (i.StartTime >= endtime || i.EndTime <= starttime)
-            //    {
-
-            //    }
-            //    else
-            //    {
-            //        timeflg = true;
-            //    }
-            //}
-            //if (timeflg)
-            //{
-            //    ModelState.AddModelError("time", "その時間はすでに予約されています");
-            //    return Page();
-            //}
-
-            //var Time = new time
-            //{
-            //    FacilityID = facilityid,
-            //    StartTime = starttime,
-            //    EndTime = endtime
-            //};
-
-            //await context.Time.AddAsync(Time);
-            //await context.SaveChangesAsync();
-            //var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            //var UserDatail = new userDetail
-            //{
-            //    UserID = userid,
-            //    LastName = last_name,
-            //    FirstName = first_name,
-            //    Email = email,
-            //    Phone = phone,
-            //    PostalCode = postal_code,
-            //    Prefecture = prefecture,
-            //    City = city,
-            //    Address = address,
-            //    Building = building
-            //};
-
-            //await context.UserDetail.AddAsync(UserDatail);
-            //await context.SaveChangesAsync();
-
-            //var Reservation = new reservation
-            //{
-            //    UserDetailID = UserDatail.UserDetailID,
-            //    TimeID = Time.TimeID,
-            //    BookingDate = DateTime.Now,
-            //    Application = "なし",
-            //    Number = 0
-            //};
-            //await context.Reservation.AddAsync(Reservation);
-            //await context.SaveChangesAsync();
-
-            //int reasevation = datacreate();
-            //if(reasevation == -1)
-            //    return Page();
-
-            //return RedirectToPage("/Thank", new { id = Reservation.ReservationID });
+            };
+            
         }
     }
 }
